@@ -1,7 +1,0 @@
-services:
-  - type: web
-    name: web-app
-    env: node
-    buildCommand: yarn install
-    startCommand: yarn start
-    nodeVersion: 16
