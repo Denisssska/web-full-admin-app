@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: d3n-admin
+    name: web-app
     env: node
     buildCommand: yarn install
     startCommand: yarn start
