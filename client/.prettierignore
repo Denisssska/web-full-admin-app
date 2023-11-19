@@ -1,0 +1,7 @@
+.git
+
+.eslintrc
+.env
+package.json
+dist
+node_modules

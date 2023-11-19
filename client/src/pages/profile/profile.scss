@@ -1,0 +1,76 @@
+@import '../../styles/variables.scss';
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+
+  form {
+
+    .label-img{
+      display: contents;
+      img {
+      margin: 0 auto;
+      border-radius: 10%;
+      cursor: pointer;
+      width: 150px;
+      object-fit: cover;
+      height: 200px;
+    }
+    }
+
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    .formItem {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+
+      label {
+        font-size: 14px;
+         color: #9e9c9a;
+      }
+
+      input {
+        padding: 10px;
+        background-color: transparent;
+        color: white;
+        outline: none;
+        border: 1px solid $soft-color;
+        border-radius: 3px;
+      }
+      .ID-Input{
+        color: #9e9c9a;
+      }
+      .errorMessage {
+        font-size: small;
+        color: tan;
+      }
+    }
+    button {
+      background: tan;
+      width: 100%;
+      padding: 10px;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+    button:hover {
+      background: #ba9f7c;
+      opacity: 95%;
+    }
+    .signup {
+      background: transparent;
+      color: tan;
+    }
+    .signup:hover {
+      background-color: #3d4960;
+
+      color: tan;
+    }
+  }
+}
