@@ -1,4 +1,4 @@
-import './Users.scss';
+import './users.scss';
 
 import { useQuery } from '@tanstack/react-query';
 
