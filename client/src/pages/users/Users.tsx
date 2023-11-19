@@ -1,6 +1,6 @@
 import './Users.scss';
 
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { AddUser, DataTable, Modal } from '../../components';
 
@@ -61,8 +61,6 @@ export const usersColumns: GridColDef[] = [
 export const Users = () => {
   const { isOpen, onClose, onOpen } = useModal();
 
-  const queryClient = useQueryClient();
-
   // TEST THE API
   const fetchUsers = async () => {
     const data = await fetch(`http://localhost:8800/api/users`).then(res => res.json());
@@ -73,12 +71,6 @@ export const Users = () => {
     queryFn: fetchUsers,
   });
 
-  const getUser = async (id: number) => {
-    const user = await data.find((user: { id: number }) => user.id === id);
-    // Кэшируем выбранного пользователя
-    queryClient.setQueryData(['user'], user);
-  };
-  // console.log(queryClient.getQueryData(['user']))
   return (
     <div className="users">
       <div className="info">
@@ -87,11 +79,7 @@ export const Users = () => {
         <button onClick={() => onClose()}>Close modal</button>
       </div>
 
-      {isLoading ? (
-        'Loading...'
-      ) : (
-        <DataTable slug="users" columns={usersColumns} rows={data} callBack={id => getUser(id)} />
-      )}
+      {isLoading ? 'Loading...' : <DataTable slug="users" columns={usersColumns} rows={data} />}
       {isOpen() && (
         <Modal title="Add new User" onClose={onClose}>
           <AddUser slug="user" onClose={onClose} itemLength={data.length} />

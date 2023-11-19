@@ -12,7 +12,7 @@ type Props = {
   columns: GridColDef[];
   rows: object[];
   slug: string;
-  callBack?: () => void;
+  
 };
 
 export const DataTable = (props: Props) => {
@@ -32,9 +32,7 @@ export const DataTable = (props: Props) => {
     //delete the item
     mutation.mutate(id);
   };
-  const goTo = (id: number) => {
-    props.callBack?.(id);
-  };
+
   const actionColumn: GridColDef = {
     field: 'action',
     headerName: 'Action',
@@ -44,7 +42,7 @@ export const DataTable = (props: Props) => {
 
       return (
         <div className="action">
-          <div onClick={() => goTo(params.row.id)}>
+          <div>
             <Link to={`/${props.slug}/${params.row.id}`}>
               <img src="/view.svg" alt="" />
             </Link>
