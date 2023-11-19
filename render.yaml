@@ -1,7 +1,7 @@
 services:
   - type: web
-    name: my-app
-    env: web-app
+    name: server-react-admin-ui
+    env: node
     buildCommand: yarn install
     startCommand: yarn start
     nodeVersion: 16
