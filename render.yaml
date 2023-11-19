@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: server-react-admin-ui
+    name: d3n-admin
     env: node
     buildCommand: yarn install
     startCommand: yarn start
