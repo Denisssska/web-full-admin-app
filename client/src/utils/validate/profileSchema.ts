@@ -2,8 +2,7 @@ import { z } from 'zod';
 
 // eslint-disable-next-line no-useless-escape
 const emailRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-// eslint-disable-next-line no-useless-escape
-const base64ImageRegExp = /^data:image\/([a-zA-Z]*);base64,([^\"]*)/;
+
 
 export const profileSchema = z.object({
   username: z

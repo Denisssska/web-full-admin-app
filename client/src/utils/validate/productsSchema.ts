@@ -1,16 +1,7 @@
 import { z } from 'zod';
 
-const phoneRegex = /^\+?[0-9]{10,15}$/;
 const priceRegex = /^\$?[0-9]+$/;
-const MAX_FILE_SIZE = 3000000;
-function checkFileType(file: File) {
-  // file type checking
-  if (file?.name) {
-    const fileType = file.name.split('.').pop();
-    if (['gif', 'png', 'jpg'].includes(fileType)) return true;
-  }
-  return false;
-}
+
 export const productsSchema = z.object({
   title: z
     .string()
@@ -40,13 +31,7 @@ export const productsSchema = z.object({
     .min(1, 'Поле "price" обязательное')
     .regex(priceRegex, { message: 'Укажите корректный price' }),
   img: z.any(),
-  // .refine(file => file?.length !== 0, 'File is required')
-  // .refine(file => file.size < MAX_FILE_SIZE, 'Max size is 3MB.')
-  // .refine(file => checkFileType(file), 'Only .jpg, .gif, .png formats are supported.'),
-  // .custom<File>(v => v instanceof File, {
-  // 	message: 'Image is required',
-  // }).optional(),
-  // .regex(phoneRegex, { message: 'Укажите корректный price' }),
+
 });
 
 export type ProductsSchemaType = z.infer<typeof productsSchema>;
