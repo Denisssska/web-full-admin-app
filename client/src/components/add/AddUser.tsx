@@ -75,11 +75,7 @@ export const AddUser: FC<Props> = ({
   const {
     register,
     handleSubmit,
-    setValue,
-    setError,
-    clearErrors,
-    watch,
-    trigger,
+
     formState: { isSubmitting, errors },
   } = useForm<UsersSchemaType>({
     mode: 'onTouched',
@@ -89,9 +85,7 @@ export const AddUser: FC<Props> = ({
   });
 
   const queryClient = useQueryClient();
-  //доделать типизацию
 
-  // доделать логин и регистрацию
   const addUser = async (params: UsersSchemaType) => {
     console.log(params);
     const data = await fetch(`http://localhost:8800/api/${slug}s`, {
@@ -123,50 +117,43 @@ export const AddUser: FC<Props> = ({
       queryClient.invalidateQueries({ queryKey: [`${slug}`] });
     },
   });
-  // console.log(watch('img') && watch('img')[0])
 
   const onSubmit = (data: UsersSchemaType) => {
     const body = {
       ...data,
-      // img: data.img && watch('img')[0],
-      // id: randomValue,
-      // number: props.itemLength + 1,
     };
 
-    //add new item
     mutation.mutateAsync(body);
     onClose();
   };
-  // console.log(props.itemLength, id)
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {usersColumns
-        // .filter(item => item.field !== 'id' && item.field !== 'number' && item.field !== 'img')
-        .map((column, id) => {
-          return (
-            <div key={id} className="item">
-              <label htmlFor={`${id}-${column.field}`}>{column.headerName}</label>
-              <input
-                readOnly={column.field === 'id' ? true : column.field === 'number' ? true : false}
-                id={`${id}-${column.field}`}
-                type={column.type === 'boolean' ? 'checkbox' : column.type}
-                placeholder={
-                  column.field === 'id'
-                    ? String(randomValue)
-                    : column.field === 'number'
-                    ? String(itemLength! + 1)
-                    : column.field
-                }
-                {...register(column.field as RegisterUserType)}
-              />
-              {errors[`${column.field as keyof typeof errors}`] && (
-                <p className="errorMessage" id={`${id}-${column.field}`} aria-live="assertive">
-                  {String(errors[column.field as keyof typeof errors]?.message)}
-                </p>
-              )}
-            </div>
-          );
-        })}
+      {usersColumns.map((column, id) => {
+        return (
+          <div key={id} className="item">
+            <label htmlFor={`${id}-${column.field}`}>{column.headerName}</label>
+            <input
+              readOnly={column.field === 'id' ? true : column.field === 'number' ? true : false}
+              id={`${id}-${column.field}`}
+              type={column.type === 'boolean' ? 'checkbox' : column.type}
+              placeholder={
+                column.field === 'id'
+                  ? String(randomValue)
+                  : column.field === 'number'
+                  ? String(itemLength! + 1)
+                  : column.field
+              }
+              {...register(column.field as RegisterUserType)}
+            />
+            {errors[`${column.field as keyof typeof errors}`] && (
+              <p className="errorMessage" id={`${id}-${column.field}`} aria-live="assertive">
+                {String(errors[column.field as keyof typeof errors]?.message)}
+              </p>
+            )}
+          </div>
+        );
+      })}
       <button disabled={isSubmitting} type="submit">
         Send
       </button>

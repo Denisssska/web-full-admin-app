@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 
 import toast from 'react-hot-toast';
 
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 import './login.scss';
 
@@ -35,7 +35,7 @@ export const Login = () => {
     actions.resetNewUser();
   }, []);
   const loading = useAppSelector(state => state.user.loading);
- 
+
   const id = useId();
 
   const {
@@ -51,7 +51,6 @@ export const Login = () => {
 
   const onSubmit = async (data: SignInSchemaType) => {
     await actions.loginTC(data).then(e => {
-
       if (e.payload !== 'Unauthorized') {
         toast.success(`Успешно!`);
       } else {

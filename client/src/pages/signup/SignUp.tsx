@@ -27,12 +27,8 @@ export const SignUp = () => {
   const {
     register,
     handleSubmit,
-    setValue,
-    setError,
-    clearErrors,
-    watch,
-    trigger,
-    formState: { isSubmitting, errors },
+
+    formState: { errors },
   } = useForm<SignUpSchemaType>({
     mode: 'onTouched',
     shouldFocusError: true, //параметр определяет, следует ли устанавливать фокус на первое поле с ошибкой после отправки формы.
@@ -93,7 +89,9 @@ export const SignUp = () => {
             </button>
           </div>
           <div className="formItem">
-            <button disabled type="button">continue with google</button>
+            <button disabled type="button">
+              continue with google
+            </button>
             Have an account?
             <Link to={'/login'}>
               <button className="signup" type="button">

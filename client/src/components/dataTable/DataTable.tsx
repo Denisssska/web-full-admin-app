@@ -12,7 +12,7 @@ type Props = {
   columns: GridColDef[];
   rows: object[];
   slug: string;
-  callBack?: (id: number) => void;
+  callBack?: () => void;
 };
 
 export const DataTable = (props: Props) => {

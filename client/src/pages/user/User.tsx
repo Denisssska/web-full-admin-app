@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { useLocation } from 'react-router-dom';
 
@@ -18,7 +18,7 @@ export const User = () => {
     queryKey: ['user', id],
     queryFn: () => fetch(`http://localhost:8800/api/users/${id}`).then(res => res.json()),
   });
-  // console.log(selectedUser)
+  
   const res = {
     ...singleUser,
     id: data?.id,

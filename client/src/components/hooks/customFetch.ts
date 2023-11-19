@@ -24,7 +24,7 @@ export async function customFetch(
   };
 
   const loginUrl = '/login'; // url страницы для авторизации
-  const tokenData = null; // объявляем локальную переменную tokenData
+ 
   // eslint-disable-next-line no-useless-catch
   try {
     console.log(getCookie('session'));

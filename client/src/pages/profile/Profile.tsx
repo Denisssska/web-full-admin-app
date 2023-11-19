@@ -8,7 +8,6 @@ import './profile.scss';
 
 import toast from 'react-hot-toast';
 
-
 import { typeOfImage } from '../../components/hooks/typeOfImage';
 
 import { loadingSelector, profileSelector, useActionCreators, useAppSelector } from '../../store';
@@ -26,12 +25,8 @@ export const Profile = () => {
   const {
     register,
     handleSubmit,
-    setValue,
-    setError,
-    clearErrors,
     watch,
-    trigger,
-    formState: { isSubmitting, errors },
+    formState: {  errors },
   } = useForm<ProfileSchemaType>({
     mode: 'onTouched',
     shouldFocusError: true, //параметр определяет, следует ли устанавливать фокус на первое поле с ошибкой после отправки формы.
@@ -127,7 +122,7 @@ export const Profile = () => {
             )}
           </div>
           <div className="formItem">
-            <label  htmlFor={`${id}-username`}>User Name</label>
+            <label htmlFor={`${id}-username`}>User Name</label>
             <input id={`${id}-username`} type="text" placeholder="User name" {...register('username')} />
             {errors[`username`] && (
               <p className="errorMessage" id={`${id}-username`} aria-live="assertive">
