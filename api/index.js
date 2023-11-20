@@ -16,17 +16,17 @@ mongoose.connect(process.env.MONGO).then(()=>{
 	console.log('connect to mongoDB');
 }).catch(e=>console.log(e));
 
-// const __dirname = path.resolve()
+const __dirname = path.resolve()
 const app = express()
-// app.use(express.static(path.join(__dirname,'/client/dist')))
-// app.get('*',(req,res)=>{
-// 	res.sendFile(path.join(__dirname,'client', 'dist', 'index.html'))
-// })
+app.use(express.static(path.join(__dirname,'/client/dist')))
+app.get('*',(req,res)=>{
+	res.sendFile(path.join(__dirname,'client', 'dist', 'index.html'))
+})
 //не забыть поменять когда на прод
 app.use(
 	cors({
-		origin: 'http://localhost:5173',
-		// origin: 'https://d3n-admin.onrender.com',
+		// origin: 'http://localhost:5173',
+		origin: 'https://d3n-admin.onrender.com',
 		credentials: true,
 	})
 )
