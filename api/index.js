@@ -24,12 +24,11 @@ app.get('*',(req,res)=>{
 })
 
 app.use(
-	cors(
-		{
-		origin: 'http://localhost:5173',
-		credentials:true
-	}
-	)
+	cors({
+		// origin: 'http://localhost:5173',
+		origin: 'https://d3n-admin.onrender.com',
+		credentials: true,
+	})
 )
 // app.use((req, res, next) => {
 // 	res.header('Access-Control-Allow-Origin', '*')
