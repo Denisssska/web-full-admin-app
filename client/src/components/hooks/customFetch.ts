@@ -1,7 +1,9 @@
 import { getCookie } from './getCookie';
 
-export const PORT = import.meta.env.VITE_REACT_APP_API_URL;
-
+export const LOCAL_PORT = import.meta.env.VITE_REACT_APP_API_URL;
+export const PROD_PORT = import.meta.env.VITE_PROD_APP_API_URL;
+console.log(import.meta.env.MODE);
+const dev_mode = import.meta.env.MODE === 'development';
 export async function customFetch(
   url: string,
   options: {
@@ -24,7 +26,7 @@ export async function customFetch(
   };
 
   const loginUrl = '/login'; // url страницы для авторизации
- 
+
   // eslint-disable-next-line no-useless-catch
   try {
     console.log(getCookie('session'));
@@ -34,7 +36,7 @@ export async function customFetch(
       // если в sessionStorage присутствует tokenData, то берем её
       return window.location.replace(loginUrl); // если токен отсутствует, то перенаправляем пользователя на страницу авторизации
     }
-    const response = await fetch(`${PORT}${url}`, opts);
+    const response = await fetch(`${dev_mode ? LOCAL_PORT : PROD_PORT}${url}`, opts);
     if (response.ok) {
       return Promise.resolve(response);
     }
