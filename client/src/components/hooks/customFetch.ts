@@ -29,7 +29,7 @@ export async function customFetch(
 
   // eslint-disable-next-line no-useless-catch
   try {
-    console.log(getCookie('session'));
+    // console.log(getCookie('session'));
     if (!getCookie('session')) {
       localStorage.removeItem('persist:root');
 

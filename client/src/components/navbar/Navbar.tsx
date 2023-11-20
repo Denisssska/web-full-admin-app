@@ -4,16 +4,14 @@ import './navbar.scss';
 
 import { profileSelector, useActionCreators, useAppSelector } from '../../store';
 
-import { userActions } from '../../store/slices/userReducer';
+import { logoutTC } from '../../store/slices/userReducer';
 
 export const Navbar = () => {
   const user = useAppSelector(profileSelector);
-  const actions = useActionCreators({ ...userActions });
+  const actions = useActionCreators({ logoutTC });
 
-  const logoutHandler = () => {
-    localStorage.removeItem('persist:root');
-    actions.logout();
-  };
+  const logoutHandler = async () => await actions.logoutTC();
+
   return (
     <div className="navbar">
       <Link to={'/'}>

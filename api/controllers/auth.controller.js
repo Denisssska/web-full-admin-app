@@ -38,6 +38,14 @@ export const signin = async (req, res, next) => {
 		next(errorHandler(e))
 	}
 }
+export const signout = async (req, res, next) => {
+	try {
+		res.clearCookie('session').status(200).json({ message: 'session end success' })
+		// res.clearCookie('access_token').status(200).json({message:'logout success'});
+	} catch (error) {
+		next(errorHandler(e))
+	}
+}
 export const google = async (req, res, next) => {
 	try {
 		const validUser = await User.findOne({ email })

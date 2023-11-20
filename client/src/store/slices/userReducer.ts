@@ -37,6 +37,18 @@ export const loginTC = createAsyncThunk(
     }
   }
 );
+export const logoutTC = createAsyncThunk('/auth/logoutTC', async (_, thunkAPI) => {
+  try {
+    thunkAPI.dispatch(userActions.start());
+    await userApi.logout();
+    localStorage.removeItem('persist:root');
+    thunkAPI.dispatch(userActions.logout());
+  } catch (e: any) {
+    console.log(e);
+    thunkAPI.dispatch(userActions.failure(e.message));
+    return thunkAPI.rejectWithValue(e.message);
+  }
+});
 export const signUpTC = createAsyncThunk(
   '/auth/signupTC',
   async ({ email, password, username }: SignUpSchemaType, thunkAPI) => {
@@ -55,6 +67,7 @@ export const signUpTC = createAsyncThunk(
       thunkAPI.dispatch(userActions.signUpSuccess(data.message));
     } catch (e: any) {
       console.log(e);
+      thunkAPI.dispatch(userActions.failure(e.message));
       return thunkAPI.rejectWithValue(e.message);
     }
   }

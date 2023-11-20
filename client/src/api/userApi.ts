@@ -13,6 +13,16 @@ export const userApi = {
       body: JSON.stringify({ email, password }),
     });
   },
+  async logout() {
+    return await fetch(`/auth/signout`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+  },
   async registration({ email, password, username }: SignUpSchemaType) {
     return await fetch(`/auth/signup`, {
       method: 'POST',
@@ -25,10 +35,8 @@ export const userApi = {
   },
 
   async updateUser(data: UpdateUser) {
-    // console.log(data.get('profilePhoto'));
-
     // const userId = data.get('_id');
-    return await customFetch( `/user/update/${data._id}`, {
+    return await customFetch(`/user/update/${data._id}`, {
       method: 'PATCH',
       // body: data,
       credentials: 'include',
