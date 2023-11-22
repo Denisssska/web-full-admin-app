@@ -73,20 +73,21 @@ export const mobileColumns: GridColDef[] = [
   },
 ];
 export const Users = () => {
-  // const { isOpen, onClose, onOpen } = useModal();
   const loading = useAppSelector(loadingSelector);
-  const allUsers = useAppSelector(allUsersSelector);
   const actions = useActionCreators({ getAllUsersTC });
-  const correctedUsers = allUsers.map((element, i) => ({
-    ...element,
-    createdAt: new Date(element.createdAt).toLocaleDateString(),
-    number: i + 1,
-  }));
-
-  // TEST THE API
   useEffect(() => {
     actions.getAllUsersTC();
   }, [actions]);
+
+  const allUsers = useAppSelector(allUsersSelector);
+  let correctedUsers;
+  if (allUsers !== null) {
+    correctedUsers = allUsers.map((element, i) => ({
+      ...element,
+      createdAt: new Date(element.createdAt).toLocaleDateString(),
+      number: i + 1,
+    }));
+  }
 
   const useMobileColumns = window.innerWidth <= 768;
 
@@ -97,12 +98,9 @@ export const Users = () => {
         <h1>Users</h1>
       </div>
 
-      {loading ? 'Loading...' : <DataTable slug="users" columns={columns} rows={correctedUsers} />}
-      {/* {isOpen() && (
-        <Modal title="Add new User" onClose={onClose}>
-          <AddUser slug="user" onClose={onClose} />
-        </Modal>
-      )} */}
+      {loading
+        ? 'Loading...'
+        : correctedUsers !== undefined && <DataTable slug="users" columns={columns} rows={correctedUsers} />}
     </div>
   );
 };

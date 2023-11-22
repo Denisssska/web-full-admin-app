@@ -36,7 +36,7 @@ export const profileSchema = z.object({
     .regex(emailRegex, { message: 'Укажите свой настоящий email' }),
   createdAt: z.string(),
   _id: z.string(),
-  profilePhoto: z.string(),
+  profilePhoto: z.any(),
 });
 
 export type ProfileSchemaType = z.infer<typeof profileSchema>;

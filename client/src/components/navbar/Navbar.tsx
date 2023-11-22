@@ -34,9 +34,7 @@ export const Navbar = () => {
             <span>{user.username}</span>
           </div>
         </Link>
-        <Link onClick={logoutHandler} to={'/login'} replace>
-          <img className="logout" src="/logout.svg" alt="logout" />
-        </Link>
+          <img onClick={logoutHandler} className="logout" src="/logout.svg" alt="logout" />
       </div>
     </div>
   );
