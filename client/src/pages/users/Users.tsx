@@ -1,48 +1,50 @@
 import './users.scss';
 
-import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
-import { AddUser, DataTable, Modal } from '../../components';
+import { DataTable } from '../../components';
 
-import { useModal } from '../../components/hooks/useModal';
+import { allUsersSelector, loadingSelector, useActionCreators, useAppSelector } from '../../store';
+
+import { getAllUsersTC } from '../../store/slices/userReducer';
 
 import type { GridColDef } from '@mui/x-data-grid';
 
 export const usersColumns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', type: 'number', width: 70 },
-  { field: 'number', headerName: '№', type: 'text', width: 70 },
+  { field: '_id', headerName: 'ID', type: 'text', width: 220 },
+  { field: 'number', headerName: '№', type: 'text', width: 50 },
   {
-    field: 'img',
+    field: 'profilePhoto',
     headerName: 'Avatar',
-    width: 100,
+    width: 70,
     type: 'text',
     renderCell: params => {
-      return <img src={params.row.img || '/noavatar.png'} alt="" />;
+      return <img src={params.row.profilePhoto || '/noavatar.png'} alt="" />;
     },
   },
   {
-    field: 'firstName',
+    field: 'firstname',
     type: 'text',
     headerName: 'First name',
-    width: 150,
+    width: 120,
   },
   {
-    field: 'lastName',
+    field: 'lastname',
     type: 'text',
     headerName: 'Last name',
-    width: 150,
+    width: 120,
   },
   {
     field: 'email',
     type: 'text',
     headerName: 'Email',
-    width: 200,
+    width: 130,
   },
   {
     field: 'phone',
     type: 'text',
     headerName: 'Phone',
-    width: 120,
+    width: 130,
   },
   {
     field: 'createdAt',
@@ -50,41 +52,57 @@ export const usersColumns: GridColDef[] = [
     width: 120,
     type: 'text',
   },
+];
+export const mobileColumns: GridColDef[] = [
+  // { field: '_id', headerName: 'ID', type: 'string', width: 130 },
+  { field: 'number', headerName: '№', type: 'text', width: 10 },
   {
-    field: 'verified',
-    headerName: 'Verified',
-    width: 100,
-    type: 'boolean',
+    field: 'profilePhoto',
+    headerName: 'Avatar',
+    width: 30,
+    type: 'text',
+    renderCell: params => {
+      return <img src={params.row.profilePhoto || '/noavatar.png'} alt="" />;
+    },
+  },
+  {
+    field: 'firstname',
+    type: 'text',
+    headerName: 'First name',
+    width: 30,
   },
 ];
-
 export const Users = () => {
-  const { isOpen, onClose, onOpen } = useModal();
+  // const { isOpen, onClose, onOpen } = useModal();
+  const loading = useAppSelector(loadingSelector);
+  const allUsers = useAppSelector(allUsersSelector);
+  const actions = useActionCreators({ getAllUsersTC });
+  const correctedUsers = allUsers.map((element, i) => ({
+    ...element,
+    createdAt: new Date(element.createdAt).toLocaleDateString(),
+    number: i + 1,
+  }));
 
   // TEST THE API
-  const fetchUsers = async () => {
-    const data = await fetch(`http://localhost:8800/api/users`).then(res => res.json());
-    return data;
-  };
-  const { isLoading, data } = useQuery({
-    queryKey: ['allusers'],
-    queryFn: fetchUsers,
-  });
+  useEffect(() => {
+    actions.getAllUsersTC();
+  }, [actions]);
 
+  const useMobileColumns = window.innerWidth <= 768;
+
+  const columns = useMobileColumns ? mobileColumns : usersColumns;
   return (
     <div className="users">
       <div className="info">
         <h1>Users</h1>
-        <button onClick={() => onOpen()}>Add New User</button>
-        <button onClick={() => onClose()}>Close modal</button>
       </div>
 
-      {isLoading ? 'Loading...' : <DataTable slug="users" columns={usersColumns} rows={data} />}
-      {isOpen() && (
+      {loading ? 'Loading...' : <DataTable slug="users" columns={columns} rows={correctedUsers} />}
+      {/* {isOpen() && (
         <Modal title="Add new User" onClose={onClose}>
-          <AddUser slug="user" onClose={onClose} itemLength={data.length} />
+          <AddUser slug="user" onClose={onClose} />
         </Modal>
-      )}
+      )} */}
     </div>
   );
 };

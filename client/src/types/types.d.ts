@@ -15,8 +15,26 @@ interface UploadImageData {
   folder: string;
 }
 interface UpdateUser {
-  _id:string;
+  _id: string;
   profilePhoto?: string;
   username?: string;
   email?: string;
+  phone?: string;
+  firstname?: string;
+  lastname?: string;
 }
+interface DataKeys {
+  name: string;
+  color: string;
+}
+interface Activities {
+  time: string;
+  text: string;
+}
+interface Data {
+  name: string;
+  visits: number;
+  orders?: number;
+  clicks?: number;
+}
+

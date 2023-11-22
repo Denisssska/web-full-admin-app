@@ -51,9 +51,7 @@ export const Login = () => {
 
   const onSubmit = async (data: SignInSchemaType) => {
     await actions.loginTC(data).then(e => {
-      if (e.payload !== 'Unauthorized') {
-        toast.success(`Успешно!`);
-      } else {
+      if (e.payload === 'Unauthorized' || e.payload === 'Not Found') {
         toast.error(`Не вышло!`);
       }
     });

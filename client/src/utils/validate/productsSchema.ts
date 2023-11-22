@@ -24,14 +24,13 @@ export const productsSchema = z.object({
     }),
   inStock: z.boolean(),
   createdAt: z.string().min(1, 'Поле "createdAt" обязательное'),
-  id: z.any().optional(),
-  number: z.any().optional(),
+  id: z.string(),
+
   price: z
     .string()
     .min(1, 'Поле "price" обязательное')
     .regex(priceRegex, { message: 'Укажите корректный price' }),
-  img: z.any(),
-
+  img: z.string(),
 });
 
 export type ProductsSchemaType = z.infer<typeof productsSchema>;

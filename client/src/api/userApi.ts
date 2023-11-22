@@ -53,4 +53,24 @@ export const userApi = {
       body: data,
     });
   },
+  async getAllUsers():Promise<any> {
+    return await customFetch(`/users/all`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+  },
+  async getUser(userId:string):Promise<any> {
+    return await customFetch(`/users/${userId}`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+  },
 };

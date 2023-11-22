@@ -37,6 +37,9 @@ export const Profile = () => {
       email: user.email,
       createdAt: user.createdAt,
       profilePhoto: user.profilePhoto,
+      phone:user.phone,
+      firstname:user.firstname,
+      lastname:user.lastname
     },
   });
 
@@ -122,7 +125,7 @@ export const Profile = () => {
             )}
           </div>
           <div className="formItem">
-            <label htmlFor={`${id}-username`}>User Name</label>
+            <label htmlFor={`${id}-username`}>Nick Name</label>
             <input id={`${id}-username`} type="text" placeholder="User name" {...register('username')} />
             {errors[`username`] && (
               <p className="errorMessage" id={`${id}-username`} aria-live="assertive">
@@ -131,9 +134,26 @@ export const Profile = () => {
             )}
           </div>
           <div className="formItem">
+            <label htmlFor={`${id}-firstname`}>First Name</label>
+            <input id={`${id}-firstname`} type="text" placeholder="First name" {...register('firstname')} />
+            {errors[`firstname`] && (
+              <p className="errorMessage" id={`${id}-firstname`} aria-live="assertive">
+                {String(errors.firstname.message)}
+              </p>
+            )}
+          </div>
+          <div className="formItem">
+            <label htmlFor={`${id}-lastname`}>Last Name</label>
+            <input id={`${id}-lastname`} type="text" placeholder="Last name" {...register('lastname')} />
+            {errors[`lastname`] && (
+              <p className="errorMessage" id={`${id}-lastname`} aria-live="assertive">
+                {String(errors.lastname.message)}
+              </p>
+            )}
+          </div>
+          <div className="formItem">
             <label htmlFor={`${id}-email`}>Email</label>
             <input
-              autoComplete="false"
               id={`${id}-email`}
               type="text"
               placeholder="Email"
@@ -142,6 +162,21 @@ export const Profile = () => {
             {errors[`email`] && (
               <p className="errorMessage" id={`${id}-email`} aria-live="assertive">
                 {String(errors.email.message)}
+              </p>
+            )}
+          </div>
+          <div className="formItem">
+            <label htmlFor={`${id}-phone`}>Phone</label>
+            <input
+              autoComplete="false"
+              id={`${id}-phone`}
+              type="text"
+              placeholder="Phone"
+              {...register('phone')}
+            />
+            {errors[`phone`] && (
+              <p className="errorMessage" id={`${id}-phone`} aria-live="assertive">
+                {String(errors.phone.message)}
               </p>
             )}
           </div>

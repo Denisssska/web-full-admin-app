@@ -1,32 +1,33 @@
-import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
-import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+import { useLocation, useParams } from 'react-router-dom';
 
 import { Single } from '../../components';
 
-import { singleUser } from '../../data';
+import { singleUserAndProductInfo } from '../../data';
 
 import './user.scss';
 
+import { enjoyedUserSelector, loadingSelector, useActionCreators, useAppSelector } from '../../store';
+
+import { getUserTC } from '../../store/slices/userReducer';
+
+
 export const User = () => {
-  // const queryClient = useQueryClient()
-  // const selectedUser = queryClient.getQueryData(['user'])
-  const location = useLocation();
-  const id = location.pathname.slice(7);
-  //Fetch data and send to Single Component
-  const { isLoading, data } = useQuery({
-    queryKey: ['user', id],
-    queryFn: () => fetch(`http://localhost:8800/api/users/${id}`).then(res => res.json()),
-  });
-  
+  const {id} = useParams();
+  const loading = useSelector(loadingSelector);
+  const enjoyedUser = useAppSelector(enjoyedUserSelector);
+  const actions = useActionCreators({getUserTC});
+
+  useEffect(() => {
+    id && actions.getUserTC(id);
+  }, [id, actions]);
+
   const res = {
-    ...singleUser,
-    id: data?.id,
-    title: data?.firstName,
-    img: data?.img,
-    lastName: data?.lastName,
-    createdAt: data?.createdAt,
-    info: { userName: data?.firstName, email: data?.email, phone: data?.phone },
+    ...singleUserAndProductInfo,
+    ...enjoyedUser,
   };
-  return <div className="user">{isLoading ? 'Loading...' : <Single slug="user" {...res} />}</div>;
+  return <div className="user">{loading ? 'Loading...' : <Single slug="user" {...res} />}</div>;
 };

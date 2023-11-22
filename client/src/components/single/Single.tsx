@@ -2,54 +2,60 @@ import { Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } f
 
 import { AddProduct, AddUser, Modal } from '..';
 
+import { ProductsSchemaType, ProfileSchemaType } from '../../utils';
+
 import { useModal } from '../hooks/useModal';
 
 import './single.scss';
 
-type Props = {
+import { profileIDSelector, useAppSelector } from '../../store';
+
+type UserAndProductInfoType = {
   slug: string;
-  id: number;
-  img?: string;
-  number?: number;
-  title: string;
-  createdAt?: string;
-  lastName?: string;
-  info?: object;
-
-  chart?: {
-    dataKeys: { name: string; color: string }[];
-    data: object[];
+  chart: {
+    dataKeys: DataKeys[];
+    data: Data[];
   };
-  activities?: { time: string; text: string }[];
+  activities: Activities[];
 };
+type UserType = ProfileSchemaType & UserAndProductInfoType;
+type ProductType = ProductsSchemaType & UserAndProductInfoType;
+type AllTypeProps = UserType & ProductType;
 
-export const Single = (props: Props) => {
+export const Single = (props: AllTypeProps) => {
+  const userId = useAppSelector(profileIDSelector);
+  const createdData = new Date(props.createdAt).toLocaleDateString();
   const { isOpen, onClose, onOpen } = useModal();
   return (
-    <div key={props.id} className="single">
+    <div className="single">
       <div className="view">
         <div className="info">
           <div className="topInfo">
-            {props.img && <img src={props.img} alt="" />}
+            <img src={props.profilePhoto || props.img} alt="" />
             <h1>{props.title}</h1>
-            <h1>{props.lastName}</h1>
-            <img onClick={onOpen} className="createBtn" src="/note.svg" alt="create button" />
+            <h1>{props.lastname}</h1>
+            {userId === props._id && (
+              <img onClick={onOpen} className="createBtn" src="/note.svg" alt="create button" />
+            )}
           </div>
           <div className="details">
             {/* вариант для response из single запроса */}
             <div className="item">
               <span className="itemTitle">Created:</span>
-              <span className="itemValue">{props.createdAt}</span>
+              <span className="itemValue">{createdData}</span>
             </div>
-
-            {/* вариант для response запроса */}
-            {props.info &&
-              Object.entries(props.info).map(item => (
-                <div className="item" key={item[0]}>
-                  <span className="itemTitle">{item[0]}</span>
-                  <span className="itemValue">{item[1]}</span>
-                </div>
-              ))}
+            <div className="item">
+              <span className="itemTitle">first name:</span>
+              <span className="itemValue">{props.firstname}</span>
+            </div>
+            <div className="item">
+              <span className="itemTitle">last name:</span>
+              <span className="itemValue">{props.lastname}</span>
+            </div>
+            <div className="item">
+              <span className="itemTitle">email:</span>
+              <span className="itemValue">{props.email}</span>
+            </div>
           </div>
         </div>
         <hr />
@@ -100,8 +106,8 @@ export const Single = (props: Props) => {
             <AddProduct
               title={props.title}
               img={props.img}
-              createdAt={props.createdAt}
-              id={props.id}
+              createdAt={createdData}
+              id={props._id}
               number={props.number}
               color={props.info?.color}
               price={props.info?.price}
@@ -113,14 +119,13 @@ export const Single = (props: Props) => {
 
           {props.slug === 'user' && (
             <AddUser
-              img={props.img}
-              email={props.info?.email}
-              phone={props.info?.phone}
-              firstName={props.title}
-              lastName={props.lastName}
-              id={props.id}
-              createdAt={props.createdAt}
-              number={props.number}
+              profilePhoto={props.profilePhoto}
+              email={props.email}
+              phone={props.phone}
+              firstname={props.firstname}
+              lastname={props.lastname}
+              id={props._id}
+              createdAt={createdData}
               slug={props.slug}
               onClose={onClose}
             />

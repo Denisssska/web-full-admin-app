@@ -9,6 +9,8 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 const initialState = {
   newUser: null,
   currentUser: null as unknown as ProfileSchemaType,
+  allUsers:null as unknown as ProfileSchemaType[],
+  enjoyedUser: null as unknown as ProfileSchemaType,
   loading: false,
   error: false,
   errorText: '',
@@ -114,6 +116,50 @@ export const updateUserTC = createAsyncThunk('/auth/updateUserTC', async (body: 
     return thunkAPI.rejectWithValue(e.message);
   }
 });
+export const getAllUsersTC = createAsyncThunk('/auth/getAllUsersTC', async (_, thunkAPI) => {
+  thunkAPI.dispatch(userActions.start());
+  try {
+    const res = await userApi.getAllUsers();
+    const data = await res?.json();
+
+    if (!res?.ok) {
+      const errorText = res?.statusText;
+      console.log(errorText);
+
+      thunkAPI.dispatch(userActions.failure(errorText));
+      throw new Error(errorText || 'something was wrong' || JSON.stringify(data));
+    }
+
+    thunkAPI.dispatch(userActions.getAllUsersSuccess(data));
+    return data;
+  } catch (e: any) {
+    thunkAPI.dispatch(userActions.failure(e.message));
+
+    return thunkAPI.rejectWithValue(e.message);
+  }
+});
+export const getUserTC = createAsyncThunk('/auth/getUserTC', async (userId:string, thunkAPI) => {
+  thunkAPI.dispatch(userActions.start());
+  try {
+    const res = await userApi.getUser(userId);
+    const data = await res?.json();
+
+    if (!res?.ok) {
+      const errorText = res?.statusText;
+      console.log(errorText);
+
+      thunkAPI.dispatch(userActions.failure(errorText));
+      throw new Error(errorText || 'something was wrong' || JSON.stringify(data));
+    }
+
+    thunkAPI.dispatch(userActions.getUserSuccess(data));
+    return data;
+  } catch (e: any) {
+    thunkAPI.dispatch(userActions.failure(e.message));
+
+    return thunkAPI.rejectWithValue(e.message);
+  }
+});
 const userSlice = createSlice({
   name: 'user',
   initialState: initialState,
@@ -128,6 +174,16 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = false;
       state.currentUser = action.payload;
+    },
+    getAllUsersSuccess: (state, action) => {
+      state.loading = false;
+      state.error = false;
+      state.allUsers = action.payload;
+    },
+    getUserSuccess: (state, action) => {
+      state.loading = false;
+      state.error = false;
+      state.enjoyedUser = action.payload;
     },
     signUpSuccess: (state, action) => {
       state.loading = false;
