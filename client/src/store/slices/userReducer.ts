@@ -121,6 +121,7 @@ export const getAllUsersTC = createAsyncThunk('/auth/getAllUsersTC', async (_, t
   try {
     const res = await userApi.getAllUsers();
     const data = await res?.json();
+console.log(res,data);
 
     if (!res?.ok) {
       const errorText = res?.statusText;
