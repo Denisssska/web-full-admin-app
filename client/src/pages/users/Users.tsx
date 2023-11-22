@@ -77,6 +77,8 @@ export const Users = () => {
   const actions = useActionCreators({ getAllUsersTC });
   useEffect(() => {
     actions.getAllUsersTC();
+    console.log('сработал запрос');
+
   }, [actions]);
 
   const allUsers = useAppSelector(allUsersSelector);
@@ -88,6 +90,7 @@ export const Users = () => {
       number: i + 1,
     }));
   }
+console.log(actions, allUsers, correctedUsers);
 
   const useMobileColumns = window.innerWidth <= 768;
 
