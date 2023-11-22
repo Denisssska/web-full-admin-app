@@ -33,7 +33,7 @@ export const Login = () => {
   const actions = useActionCreators({ loginTC, ...userActions });
   useEffect(() => {
     actions.resetNewUser();
-  }, []);
+  }, [actions]);
   const loading = useAppSelector(state => state.user.loading);
 
   const id = useId();

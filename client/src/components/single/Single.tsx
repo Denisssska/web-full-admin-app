@@ -2,13 +2,14 @@ import { Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } f
 
 import { AddProduct, AddUser, Modal } from '..';
 
+import { profileIDSelector, useAppSelector } from '../../store';
+
 import { ProductsSchemaType, ProfileSchemaType } from '../../utils';
 
 import { useModal } from '../hooks/useModal';
 
 import './single.scss';
 
-import { profileIDSelector, useAppSelector } from '../../store';
 
 type UserAndProductInfoType = {
   slug: string;

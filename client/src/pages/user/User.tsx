@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { Single } from '../../components';
 
@@ -14,12 +14,11 @@ import { enjoyedUserSelector, loadingSelector, useActionCreators, useAppSelector
 
 import { getUserTC } from '../../store/slices/userReducer';
 
-
 export const User = () => {
-  const {id} = useParams();
+  const { id } = useParams();
   const loading = useSelector(loadingSelector);
   const enjoyedUser = useAppSelector(enjoyedUserSelector);
-  const actions = useActionCreators({getUserTC});
+  const actions = useActionCreators({ getUserTC });
 
   useEffect(() => {
     id && actions.getUserTC(id);

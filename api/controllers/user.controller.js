@@ -44,7 +44,7 @@ export const getUsers = async (req, res) => {
 	// Пропустить первые 10
 	const skip = 10
 	try {
-		const users = await User.find()
+		const users = await User.find({})
 			.sort(sort)
 			// .skip(skip)
 			.limit(limit)
