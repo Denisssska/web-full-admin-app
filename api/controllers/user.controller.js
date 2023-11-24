@@ -61,8 +61,10 @@ export const getUsers = async (req, res) => {
 }
 export const getUser = async (req, res) => {
 	console.log('Inside getUser route!')
+	
 	try {
 		const user = await User.findById(req.params.userId)
+		//  console.log('User fetched:', user)
 		if (!user) {
 			return res.status(404).json({
 				message: 'Пользователь не найден',
@@ -71,8 +73,9 @@ export const getUser = async (req, res) => {
 		const { passwordHash, ...userData } = user._doc
 		res.json(userData)
 	} catch (e) {
+		// console.log('Error in getUser:', e)
 		res.status(500).json({
-			message: 'Не доступа',
+			message: 'Не найден юзерЪ',
 		})
 	}
 }

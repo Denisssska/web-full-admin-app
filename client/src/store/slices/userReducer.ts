@@ -97,16 +97,16 @@ export const updateUserImgTC = createAsyncThunk('/auth/updateUserImgTC', async (
 export const updateUserTC = createAsyncThunk('/auth/updateUserTC', async (body: UpdateUser, thunkAPI) => {
   try {
     thunkAPI.dispatch(userActions.start());
-    const res = await userApi.updateUser(body);
-    const data = await res?.json();
+    const data = await userApi.updateUser(body);
+       // const data = await res?.json();
 
-    if (!res?.ok) {
-      const errorText = res?.statusText;
-      console.log(errorText);
+    // if (!res?.ok) {
+    //   const errorText = res?.statusText;
+    //   console.log(errorText);
 
-      thunkAPI.dispatch(userActions.failure(errorText));
-      throw new Error(errorText || 'something was wrong' || JSON.stringify(data));
-    }
+    //   thunkAPI.dispatch(userActions.failure(errorText));
+    //   throw new Error(errorText || 'something was wrong' || JSON.stringify(data));
+    // }
 
     thunkAPI.dispatch(userActions.signInSuccess(data));
     return data;
@@ -119,17 +119,7 @@ export const updateUserTC = createAsyncThunk('/auth/updateUserTC', async (body: 
 export const getAllUsersTC = createAsyncThunk('/auth/getAllUsersTC', async (_, thunkAPI) => {
   thunkAPI.dispatch(userActions.start());
   try {
-    const res = await userApi.getAllUsers();
-    const data = await res?.json();
-console.log(res,data);
-
-    if (!res?.ok) {
-      const errorText = res?.statusText;
-      console.log(errorText);
-
-      thunkAPI.dispatch(userActions.failure(errorText));
-      throw new Error(errorText || 'something was wrong' || JSON.stringify(data));
-    }
+    const data = await userApi.getAllUsers();
 
     thunkAPI.dispatch(userActions.getAllUsersSuccess(data));
     return data;
@@ -142,16 +132,7 @@ console.log(res,data);
 export const getUserTC = createAsyncThunk('/auth/getUserTC', async (userId:string, thunkAPI) => {
   thunkAPI.dispatch(userActions.start());
   try {
-    const res = await userApi.getUser(userId);
-    const data = await res?.json();
-
-    if (!res?.ok) {
-      const errorText = res?.statusText;
-      console.log(errorText);
-
-      thunkAPI.dispatch(userActions.failure(errorText));
-      throw new Error(errorText || 'something was wrong' || JSON.stringify(data));
-    }
+    const data = await userApi.getUser(userId);
 
     thunkAPI.dispatch(userActions.getUserSuccess(data));
     return data;

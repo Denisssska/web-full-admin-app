@@ -34,9 +34,9 @@ export const userApi = {
     });
   },
 
-  async updateUser(data: UpdateUser) {
+   updateUser(data: UpdateUser) {
     // const userId = data.get('_id');
-    return await customFetch(`/user/update/${data._id}`, {
+    return customFetch(`/user/update/${data._id}`, {
       method: 'PATCH',
       // body: data,
       credentials: 'include',
@@ -53,8 +53,8 @@ export const userApi = {
       body: data,
     });
   },
-  async getAllUsers():Promise<any> {
-    return await customFetch(`/users/all`, {
+   getAllUsers() {
+    return  customFetch(`/users/all`, {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -63,8 +63,8 @@ export const userApi = {
       },
     });
   },
-  async getUser(userId:string):Promise<any> {
-    return await customFetch(`/users/${userId}`, {
+   getUser(userId:string) {
+    return customFetch(`/users/${userId}`, {
       method: 'GET',
       credentials: 'include',
       headers: {

@@ -34,7 +34,7 @@ export const Single = (props: AllTypeProps) => {
           <div className="topInfo">
             <img src={props.profilePhoto || props.img} alt="" />
             <h1>{props.title}</h1>
-            <h1>{props.lastname}</h1>
+            <h1>{props.username}</h1>
             {userId === props._id && (
               <img onClick={onOpen} className="createBtn" src="/note.svg" alt="create button" />
             )}

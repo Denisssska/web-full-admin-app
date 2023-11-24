@@ -21,8 +21,10 @@ export const User = () => {
   const actions = useActionCreators({ getUserTC });
 
   useEffect(() => {
-    id && actions.getUserTC(id);
-  }, [id, actions]);
+    if (!Object.keys(enjoyedUser).length || (Object.keys(enjoyedUser).length && id !== enjoyedUser._id)) {
+      id && actions.getUserTC(id);
+    }
+  }, [id]);
 
   const res = {
     ...singleUserAndProductInfo,

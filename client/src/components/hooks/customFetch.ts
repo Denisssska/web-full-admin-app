@@ -26,23 +26,30 @@ export async function customFetch(
   };
 
   const loginUrl = '/login'; // url страницы для авторизации
+const response = await fetch(`${dev_mode ? LOCAL_PORT : PROD_PORT}${url}`, opts);
+if (!response.ok) {
+  console.log(response);
 
-  // eslint-disable-next-line no-useless-catch
-  try {
-    // console.log(getCookie('session'));
-    if (!getCookie('session')) {
-      localStorage.removeItem('persist:root');
+  throw new Error(`HTTP error! Status: ${response.status}`);
+}
 
-      // если в sessionStorage присутствует tokenData, то берем её
-      return window.location.replace(loginUrl); // если токен отсутствует, то перенаправляем пользователя на страницу авторизации
-    }
-    const response = await fetch(`${dev_mode ? LOCAL_PORT : PROD_PORT}${url}`, opts);
-    if (response.ok) {
-      return Promise.resolve(response);
-    }
-  } catch (error) {
-    throw error;
-  }
+return await response.json();
+  // // eslint-disable-next-line no-useless-catch
+  // try {
+  //   // console.log(getCookie('session'));
+  //   if (!getCookie('session')) {
+  //     localStorage.removeItem('persist:root');
+
+  //     // если в sessionStorage присутствует tokenData, то берем её
+  //     return window.location.replace(loginUrl); // если токен отсутствует, то перенаправляем пользователя на страницу авторизации
+  //   }
+  //   const response = await fetch(`${dev_mode ? LOCAL_PORT : PROD_PORT}${url}`, opts);
+  //   if (response.ok) {
+  //     return Promise.resolve(response);
+  //   }
+  // } catch (error) {
+  //   throw error;
+  // }
 }
 
 export default customFetch;
