@@ -26,7 +26,7 @@ app.get('*',(req,res)=>{
 app.use(
 	cors({
 		// origin: 'http://localhost:5173',
-		 origin: 'https://d3n-admin.onrender.com',
+		origin: 'https://d3n-admin.onrender.com',
 		credentials: true,
 	})
 )

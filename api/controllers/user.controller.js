@@ -48,16 +48,8 @@ export const getUsers = async (req, res) => {
 			.sort(sort)
 			// .skip(skip)
 			.limit(limit)
-		// const users = await User.find({})
-		// const cursor = User.find({}).sort(sort).cursor()
-		// console.log(cursor)
-		// // Первая страница
-		// const firstPage = await cursor.limit(limit)
-
-		// // Вторая страница
-		// const secondPage = await cursor.skip(skip).limit(limit)
-		if (!users) {
-			return { status: 'error', error: 'Invalid login' }
+		if (!users?.length) {
+			return res.status(404).json({ message: 'Users not found' })
 		}
 
 		res.status(200).json(users)

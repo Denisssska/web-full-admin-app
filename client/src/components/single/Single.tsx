@@ -103,19 +103,21 @@ export const Single = (props: AllTypeProps) => {
       </div>
       {isOpen() && (
         <Modal onClose={onClose} title={`Update ${props.slug}`}>
-          {props.slug === 'product' && (
-            <AddProduct
-              title={props.title}
-              img={props.img}
-              createdAt={createdData}
-              id={props._id}
-              number={props.number}
-              color={props.info?.color}
-              price={props.info?.price}
-              producer={props.info?.producer}
-              slug={props.slug}
-              onClose={onClose}
-            />
+          {props.slug === 'product' && (<div>
+            product
+          </div>
+            // <AddProduct
+            //   title={props.title}
+            //   img={props.img}
+            //   createdAt={createdData}
+            //   id={props._id}
+            //   number={props.number}
+            //   color={props.info?.color}
+            //   price={props.info?.price}
+            //   producer={props.info?.producer}
+            //   slug={props.slug}
+            //   onClose={onClose}
+            // />
           )}
 
           {props.slug === 'user' && (

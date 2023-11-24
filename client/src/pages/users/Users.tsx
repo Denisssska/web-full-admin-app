@@ -73,24 +73,26 @@ export const mobileColumns: GridColDef[] = [
   },
 ];
 export const Users = () => {
-  const loading = useAppSelector(loadingSelector);
   const actions = useActionCreators({ getAllUsersTC });
+  let allUsers = useAppSelector(allUsersSelector);
   useEffect(() => {
-    actions.getAllUsersTC();
-    console.log('сработал запрос');
+    if (!allUsers.length) {
+      console.log('сработал useEff');
+      actions.getAllUsersTC();
+    }
+    return () => console.clear();
+  }, []);
 
-  }, [actions]);
+  const loading = useAppSelector(loadingSelector);
 
-  const allUsers = useAppSelector(allUsersSelector);
-  let correctedUsers;
-  if (allUsers !== null) {
-    correctedUsers = allUsers.map((element, i) => ({
+  if (allUsers.length) {
+    allUsers = allUsers.map((element, i) => ({
       ...element,
       createdAt: new Date(element.createdAt).toLocaleDateString(),
       number: i + 1,
     }));
   }
-console.log(actions, allUsers, correctedUsers);
+  console.log(allUsers);
 
   const useMobileColumns = window.innerWidth <= 768;
 
@@ -101,9 +103,7 @@ console.log(actions, allUsers, correctedUsers);
         <h1>Users</h1>
       </div>
 
-      {loading
-        ? 'Loading...'
-        : correctedUsers !== undefined && <DataTable slug="users" columns={columns} rows={correctedUsers} />}
+      {loading ? 'Loading...' : <DataTable slug="users" columns={columns} rows={allUsers} />}
     </div>
   );
 };

@@ -9,8 +9,8 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 const initialState = {
   newUser: null,
   currentUser: null as unknown as ProfileSchemaType,
-  allUsers:null as unknown as ProfileSchemaType[],
-  enjoyedUser: null as unknown as ProfileSchemaType,
+  allUsers:[] as ProfileSchemaType[],
+  enjoyedUser: {} as ProfileSchemaType,
   loading: false,
   error: false,
   errorText: '',
@@ -205,8 +205,8 @@ const userSlice = createSlice({
     logout: state => {
       state.newUser = null;
       state.currentUser = null as unknown as ProfileSchemaType;
-      state.enjoyedUser =  null as unknown as ProfileSchemaType;
-      state.allUsers = null as unknown as ProfileSchemaType[];
+      state.enjoyedUser =  {} as ProfileSchemaType;
+      state.allUsers = [] as ProfileSchemaType[];
       state.loading = false;
       state.error = false;
       state.errorText = '';
