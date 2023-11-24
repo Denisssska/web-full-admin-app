@@ -16,12 +16,13 @@ mongoose.connect(process.env.MONGO).then(()=>{
 	console.log('connect to mongoDB');
 }).catch(e=>console.log(e));
 
-const __dirname = path.resolve()
-const app = express()
-app.use(express.static(path.join(__dirname,'/client/dist')))
-app.get('*',(req,res)=>{
-	res.sendFile(path.join(__dirname,'client', 'dist', 'index.html'))
-})
+const app = express();
+const __dirname = path.resolve();
+
+app.use(express.json());
+app.use(cookieParser());
+
+
 //не забыть поменять когда на прод
 app.use(
 	cors({
@@ -29,14 +30,13 @@ app.use(
 		origin: 'https://d3n-admin.onrender.com',
 		credentials: true,
 	})
-)
-// app.use((req, res, next) => {
-// 	res.header('Access-Control-Allow-Origin', '*')
-// 	res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, PATCH')
-// 	res.header('Access-Control-Allow-Headers', 'Content-Type')
-// 	next()
-// })
-app.use(express.json())
+	)
+	// app.use((req, res, next) => {
+		// 	res.header('Access-Control-Allow-Origin', '*')
+		// 	res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, PATCH')
+		// 	res.header('Access-Control-Allow-Headers', 'Content-Type')
+		// 	next()
+		// })
 
 let products = [
 	{
@@ -137,52 +137,21 @@ let products = [
 		inStock: true,
 	},
 ]
-
-
-
-
-
-// GET PRODUCTS
-app.get('/api/products', (req, res) => {
-	res.json(products)
-})
-
-// GET PRODUCT
-app.get('/api/products/:id', (req, res) => {
-	const product = products.find(product => product.id === parseInt(req.params.id))
-	res.json(product)
-})
-// UPDATE PRODUCT
-app.put('/api/products/:id', (req, res) => {
-	let currentProductId =products.findIndex(product => product.id === parseInt(req.params.id))
-	
-	const updatedProduct = req.body
-	
-	products[currentProductId] = { ...products[currentProductId],...updatedProduct }
-	console.log(products[currentProductId])
-	res.json(products[currentProductId])
-})
-// ADD PRODUCT
-app.post('/api/products', (req, res) => {
-	products.unshift(req.body)
-	res.json(products)
-})
-
-
-// DELETE PRODUCT
-app.delete('/api/products/:id', (req, res) => {
-	products = products.filter(product => product.id !== parseInt(req.params.id))
-	res.json('Product deleted!')
-})
-
-app.listen(8800, () => {
-	console.log('Connected to backend.')
-})
+app.use('/users',userRoutes);
+app.use('/user',userRoutes);
+app.use('/auth', authRoutes);
 
 app.get('/',(req,res)=>{
 res.json({message:"API is Working"})
 })
-app.use(cookieParser());
-app.use('/users',userRoutes);
-app.use('/user',userRoutes);
-app.use('/auth', authRoutes);
+// Раздача статических файлов
+app.use(express.static(path.join(__dirname, '/client/dist')));
+// Route для поддержки HTML5 History API
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
+})
+
+
+app.listen(8800, () => {
+	console.log('Connected to backend.')
+})
