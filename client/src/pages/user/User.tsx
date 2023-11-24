@@ -24,6 +24,7 @@ export const User = () => {
     if (!Object.keys(enjoyedUser).length || (Object.keys(enjoyedUser).length && id !== enjoyedUser._id)) {
       id && actions.getUserTC(id);
     }
+    return () => console.clear();
   }, [id]);
 
   const res = {
