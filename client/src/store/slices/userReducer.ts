@@ -152,6 +152,9 @@ const userSlice = createSlice({
     start: state => {
       state.loading = true;
     },
+    success: state => {
+      state.loading = false;
+    },
     signInSuccess: (state, action) => {
       state.loading = false;
       state.error = false;

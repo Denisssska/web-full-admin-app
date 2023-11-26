@@ -4,9 +4,11 @@ import { useEffect } from 'react';
 
 import { DataTable } from '../../components';
 
-import { allUsersSelector, loadingSelector, useActionCreators, useAppSelector } from '../../store';
+import { useActionCreators, useAppSelector } from '../../store/hooks/hooks';
 
-import { getAllUsersTC } from '../../store/slices/userReducer';
+import { allUsersSelector, loadingSelector } from '../../store/selectors';
+
+import { getAllUsersTC } from '../../store/slices';
 
 import type { GridColDef } from '@mui/x-data-grid';
 
@@ -76,10 +78,9 @@ export const Users = () => {
   const actions = useActionCreators({ getAllUsersTC });
   let allUsers = useAppSelector(allUsersSelector);
   useEffect(() => {
-    if (!allUsers.length) {
-      console.log('сработал useEff');
-      actions.getAllUsersTC();
-    }
+    // if (!allUsers.length) {
+    actions.getAllUsersTC();
+    // }
     return () => console.clear();
   }, []);
 

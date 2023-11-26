@@ -6,12 +6,14 @@ import storage from 'redux-persist/lib/storage';
 
 import thunk from 'redux-thunk';
 
-import { userReducer } from './slices/userReducer';
+import { productReducer, userReducer } from './slices';
+
 
 export type StateAppType = ReturnType<typeof reducersBox>;
 
 const reducersBox = combineReducers({
   user: userReducer,
+  product:productReducer,
 });
 const persistConfig = {
   key: 'root',

@@ -14,7 +14,7 @@ import { ToasterProvider } from '../../providers/ToasterProvider';
 
 import { useActionCreators, useAppSelector } from '../../store/hooks/hooks';
 
-import { signUpTC } from '../../store/slices/userReducer';
+import { signUpTC } from '../../store/slices';
 
 import { signupSchema, SignUpSchemaType } from '../../utils';
 

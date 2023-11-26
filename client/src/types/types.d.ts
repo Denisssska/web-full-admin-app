@@ -37,4 +37,15 @@ interface Data {
   orders?: number;
   clicks?: number;
 }
+interface ProductCreation {
+  title?: string;
+  img?: string;
+  color?: string;
+  producer?: string;
+  price?: string;
+  user: string;
+  inStock?: boolean;
+  viewsCount?: number;
+  _id: string;
+}
 

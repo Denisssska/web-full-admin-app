@@ -10,9 +10,11 @@ import toast from 'react-hot-toast';
 
 import { typeOfImage } from '../../components/hooks/typeOfImage';
 
-import { loadingSelector, profileSelector, useActionCreators, useAppSelector } from '../../store';
+import { useActionCreators, useAppSelector } from '../../store/hooks/hooks';
 
-import { updateUserImgTC, updateUserTC } from '../../store/slices/userReducer';
+import { loadingSelector, profileSelector } from '../../store/selectors';
+
+import { updateUserImgTC, updateUserTC } from '../../store/slices';
 
 import { ProfileSchemaType, profileSchema } from '../../utils';
 

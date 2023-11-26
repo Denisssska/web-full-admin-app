@@ -20,7 +20,8 @@ import { ToasterProvider } from '../../providers/ToasterProvider';
 
 import { useActionCreators, useAppSelector } from '../../store/hooks/hooks';
 
-import { loginTC, userActions } from '../../store/slices/userReducer';
+
+import { loginTC, userActions } from '../../store/slices';
 
 import { signInSchema, SignInSchemaType } from '../../utils';
 //временное решение

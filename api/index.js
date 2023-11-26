@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 
 import userRoutes from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
+import productRoutes from './routes/product.route.js'
 
 import cookieParser from 'cookie-parser';
 
@@ -140,10 +141,11 @@ let products = [
 app.use('/users',userRoutes);
 app.use('/user',userRoutes);
 app.use('/auth', authRoutes);
+app.use('/products', productRoutes);
 
-app.get('/',(req,res)=>{
-res.json({message:"API is Working"})
-})
+// app.get('/',(req,res)=>{
+// res.json({message:"API is Working"})
+// })
 // Раздача статических файлов
 app.use(express.static(path.join(__dirname, '/client/dist')));
 // Route для поддержки HTML5 History API

@@ -10,9 +10,11 @@ import { singleUserAndProductInfo } from '../../data';
 
 import './user.scss';
 
-import { enjoyedUserSelector, loadingSelector, useActionCreators, useAppSelector } from '../../store';
+import { useActionCreators, useAppSelector } from '../../store/hooks/hooks';
 
-import { getUserTC } from '../../store/slices/userReducer';
+import { enjoyedUserSelector, loadingSelector } from '../../store/selectors';
+
+import { getUserTC } from '../../store/slices';
 
 export const User = () => {
   const { id } = useParams();

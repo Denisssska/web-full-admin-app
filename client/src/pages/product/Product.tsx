@@ -1,6 +1,10 @@
+import { useAppSelector } from '../../store/hooks/hooks';
+
+import { loadingSelector } from '../../store/selectors';
+
 import './product.scss';
 
-import { loadingSelector, useAppSelector } from '../../store';
+
 
 export const Product = () => {
   const loading = useAppSelector(loadingSelector);

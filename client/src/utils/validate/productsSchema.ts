@@ -7,7 +7,6 @@ export const productsSchema = z.object({
     .string()
     .min(2, 'Поле "title" должно содержать хотя бы 2 буквы')
     .max(64, 'Поле "title" содержать больше 64 букв'),
-
   color: z
     .string()
     .min(2, 'Поле "color" должно содержать хотя бы 2 буквы')
@@ -24,8 +23,9 @@ export const productsSchema = z.object({
     }),
   inStock: z.boolean(),
   createdAt: z.string().min(1, 'Поле "createdAt" обязательное'),
-  id: z.string(),
-
+  _id: z.string(),
+  user: z.string(),
+  viewsCount: z.number().optional(),
   price: z
     .string()
     .min(1, 'Поле "price" обязательное')
