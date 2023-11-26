@@ -2,9 +2,15 @@ import { Link } from 'react-router-dom';
 
 import './navbar.scss';
 
-import { profileSelector, useActionCreators, useAppSelector } from '../../store';
+import { useActionCreators, useAppSelector } from '../../store/hooks/hooks';
 
-import { logoutTC } from '../../store/slices/userReducer';
+import { profileSelector } from '../../store/selectors';
+
+import { logoutTC } from '../../store/slices';
+
+
+
+
 
 export const Navbar = () => {
   const user = useAppSelector(profileSelector);
