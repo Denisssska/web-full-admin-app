@@ -1,15 +1,16 @@
 import { Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
-import { AddProduct, AddUser, Modal } from '..';
+import { AddUser, Modal } from '..';
 
-import { profileIDSelector, useAppSelector } from '../../store';
+import './single.scss';
+
+import { useAppSelector } from '../../store/hooks/hooks';
+
+import { profileIDSelector } from '../../store/selectors';
 
 import { ProductsSchemaType, ProfileSchemaType } from '../../utils';
 
 import { useModal } from '../hooks/useModal';
-
-import './single.scss';
-
 
 type UserAndProductInfoType = {
   slug: string;
@@ -103,9 +104,8 @@ export const Single = (props: AllTypeProps) => {
       </div>
       {isOpen() && (
         <Modal onClose={onClose} title={`Update ${props.slug}`}>
-          {props.slug === 'product' && (<div>
-            product
-          </div>
+          {props.slug === 'product' && (
+            <div>product</div>
             // <AddProduct
             //   title={props.title}
             //   img={props.img}
