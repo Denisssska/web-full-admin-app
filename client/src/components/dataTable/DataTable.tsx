@@ -2,21 +2,19 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 import { Link } from 'react-router-dom';
 
-import { ProfileSchemaType } from '../../utils';
+import { ProductsSchemaType, ProfileSchemaType } from '../../utils';
 
 import type { GridColDef } from '@mui/x-data-grid';
 
 import './dataTable.scss';
 
-
 type Props = {
   columns: GridColDef[];
-  rows: ProfileSchemaType[];
+  rows: ProfileSchemaType[] | ProductsSchemaType[];
   slug: string;
 };
 
 export const DataTable = (props: Props) => {
-  
   const handleDelete = (id: number) => {
     console.log(id);
   };
@@ -47,7 +45,6 @@ export const DataTable = (props: Props) => {
   return (
     <div className="dataTable">
       <DataGrid
-
         getRowId={row => row._id}
         className="dataGrid"
         rows={props.rows}

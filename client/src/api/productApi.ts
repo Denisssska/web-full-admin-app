@@ -1,6 +1,6 @@
 import customFetch from '../components/hooks/customFetch';
 
-import { SignInSchemaType, SignUpSchemaType } from '../utils';
+import { ProductsSchemaType } from '../utils';
 
 export const productApi = {
   async create(data: ProductCreation) {
@@ -25,11 +25,9 @@ export const productApi = {
     });
   },
 
-  updateProduct(data: ProductCreation) {
-    // const userId = data.get('_id');
-    return customFetch(`/user/update/${data._id}`, {
+  updateProduct(data: ProductsSchemaType) {
+    return customFetch(`/products/update/${data._id}`, {
       method: 'PATCH',
-      // body: data,
       credentials: 'include',
       body: JSON.stringify(data),
       headers: {

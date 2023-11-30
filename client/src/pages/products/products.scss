@@ -1,3 +1,5 @@
+
+@import '../../styles/variables.scss';
 .products {
   .info {
     display: flex;
@@ -6,6 +8,18 @@
     margin-bottom: 20px;
 
     button {
+      border: 2px solid $main-color;
+      border-radius: 20px;
+      background-color: $dark-color;
+      color: $main-color;
+      padding: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      border: 2px solid $main-color;
+      border-radius: 20px;
+      background-color: $soft-bg;
+      color: $main-color;
       padding: 5px;
       cursor: pointer;
     }

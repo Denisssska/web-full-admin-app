@@ -38,14 +38,12 @@ interface Data {
   clicks?: number;
 }
 interface ProductCreation {
-  title?: string;
-  img?: string;
-  color?: string;
-  producer?: string;
-  price?: string;
+  title: string;
+  img: string;
+  color: string;
+  producer: string;
+  price: string;
   user: string;
-  inStock?: boolean;
-  viewsCount?: number;
-  _id: string;
+  _id?:string;
 }
 

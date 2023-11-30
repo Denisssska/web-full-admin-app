@@ -22,15 +22,13 @@ export const productsSchema = z.object({
       message: 'Поле "producer" должно содержать только буквы',
     }),
   inStock: z.boolean(),
-  createdAt: z.string().min(1, 'Поле "createdAt" обязательное'),
-  _id: z.string(),
-  user: z.string(),
+  createdAt: z.string().min(1, 'Поле "createdAt" обязательное').optional(),
+  _id: z.string().optional(),
+  user: z.string().optional(),
   viewsCount: z.number().optional(),
-  price: z
-    .string()
-    .min(1, 'Поле "price" обязательное')
-    .regex(priceRegex, { message: 'Укажите корректный price' }),
-  img: z.string(),
+  price: z.string().min(1, 'Поле "price" обязательное'),
+  // .regex(priceRegex, { message: 'Укажите корректный price' }),
+  img: z.any().optional(),
 });
 
 export type ProductsSchemaType = z.infer<typeof productsSchema>;

@@ -5,7 +5,17 @@ form {
   flex-wrap: wrap;
   max-width: 500px;
   justify-content: space-between;
-
+  .label-img {
+    display: contents;
+    img {
+      margin: 0 auto;
+      border-radius: 10%;
+      cursor: pointer;
+      width: 150px;
+      object-fit: cover;
+      height: 200px;
+    }
+  }
   .item {
     width: 40%;
     display: flex;
@@ -26,6 +36,11 @@ form {
       border-radius: 3px;
     }
   }
+.checkbox {
+      flex-direction: row;
+      align-items: end;
+      justify-content: center;
+    }
   button {
     width: 100%;
     padding: 10px;

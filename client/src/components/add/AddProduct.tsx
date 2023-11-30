@@ -1,41 +1,31 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-
 import './add.scss';
 
-import { FC } from 'react';
+import { FC, useId } from 'react';
 
 import { useForm } from 'react-hook-form';
 
-import { productColumns } from '../../pages/products/Products';
+import toast from 'react-hot-toast';
+
+import { useActionCreators } from '../../store/hooks/hooks';
+
+import { updateProductImgTC, updateProductTC } from '../../store/slices';
 
 import { productsSchema, ProductsSchemaType } from '../../utils/validate/productsSchema';
 
 type Props = {
-  number?: number;
-  title?: string;
-  color?: string;
-  producer?: string;
-  inStock?: boolean;
-  createdAt?: string;
-  id?: number;
-  price?: string;
-  img?: string;
-  slug: string;
+  title: string;
+  color: string;
+  producer: string;
+  inStock: boolean;
+  createdAt: string;
+  id: string;
+  price: string;
+  img: string;
+  createdBy?: string;
   onClose: () => void;
-  itemLength?: number;
 };
-type RegisterType =
-  | 'number'
-  | 'title'
-  | 'color'
-  | 'producer'
-  | 'inStock'
-  | 'createdAt'
-  | 'id'
-  | 'price'
-  | 'img';
 
 export const AddProduct: FC<Props> = ({
   onClose,
@@ -44,117 +34,147 @@ export const AddProduct: FC<Props> = ({
   id,
   img,
   inStock,
-  number,
   price,
   producer,
   title,
-  slug,
-  itemLength,
+  createdBy,
 }) => {
+  const actions = useActionCreators({ updateProductImgTC, updateProductTC });
+  const customId = useId();
+
   const updateDefValues = {
     color,
     createdAt,
-    id,
+    _id: id,
     img,
     inStock,
-    number: number ? number : 100,
     price,
     producer,
     title,
+    user: createdBy,
   };
-  const getDefValues = () => {
-    if (id) {
-      return updateDefValues;
-    } else {
-      return {
-        id: randomValue,
-        number: itemLength! + 1,
-      };
-    }
-  };
-  const randomValue = Math.floor(Math.random() * 1000);
+
   const {
     register,
+    watch,
     handleSubmit,
     formState: { isSubmitting, errors },
   } = useForm<ProductsSchemaType>({
     mode: 'onTouched',
     shouldFocusError: true, //параметр определяет, следует ли устанавливать фокус на первое поле с ошибкой после отправки формы.
     resolver: zodResolver(productsSchema),
-    defaultValues: getDefValues(),
+    defaultValues: updateDefValues,
   });
 
-  const queryClient = useQueryClient();
-
-  const addProduct = async (params: ProductsSchemaType) => {
-    const data = await fetch(`http://localhost:8800/api/${slug}s`, {
-      method: 'post',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(params),
-    });
-    console.log(data);
-    return data;
-  };
-  const updateProduct = async (params: ProductsSchemaType) => {
-    const data = await fetch(`http://localhost:8800/api/${slug}s/${id}`, {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(params),
-    });
-    console.log(data);
-    return data;
-  };
-  const mutation = useMutation({
-    mutationFn: id ? updateProduct : addProduct,
-
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [`all${slug}s`] });
-      queryClient.invalidateQueries({ queryKey: [`${slug}`] });
-    },
-  });
-
-  const onSubmit = (data: ProductsSchemaType) => {
-    const body = {
-      ...data,
+  const uploadImageToCloudinary = async (image: File) => {
+    const data: UploadImageData = {
+      file: image,
+      upload_preset: import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET,
+      cloud_name: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
+      folder: 'Cloudinary-admin-products',
     };
+    const formData = new FormData();
+    for (const key in data) {
+      formData.append(key, data[key]);
+    }
+    return await actions.updateProductImgTC(formData);
+  };
 
-    mutation.mutateAsync(body);
+  const watchToast = (value: any) => {
+    if (value.error) {
+      toast.error(`Не удалось обновить ${watch('title')}!`);
+    } else {
+      toast.success(`${watch('title')} успешно обновлен!`);
+    }
+  };
+  const onSubmit = async (data: ProductsSchemaType) => {
+    console.log(data);
+    if (data.img instanceof FileList) {
+      const savedPhoto = await uploadImageToCloudinary(data.img[0]);
+      if (savedPhoto.payload === 'Failed to fetch') {
+        toast.error(`Не удалось обновить ${watch('title')}!`);
+        return;
+      }
+      const createdProduct = { ...data, img: savedPhoto.payload };
+      const savedUpdates = await actions.updateProductTC(createdProduct);
+      await Promise.all([savedPhoto, savedUpdates]).then(res => {
+        watchToast(res[1]);
+      });
+    } else {
+      await actions
+        .updateProductTC({
+          ...data,
+          img: watch('img'),
+        })
+        .then(res => {
+          watchToast(res);
+        });
+    }
     onClose();
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {productColumns.map((column, id) => {
-        return (
-          <div key={id} className="item">
-            <label htmlFor={`${id}-${column.field}`}>{column.headerName}</label>
-            <input
-              readOnly={column.field === 'id' ? true : column.field === 'number' ? true : false}
-              id={`${id}-${column.field}`}
-              type={column.type === 'boolean' ? 'checkbox' : column.type}
-              placeholder={
-                column.field === 'id'
-                  ? String(randomValue)
-                  : column.field === 'number'
-                  ? String(itemLength! + 1)
-                  : column.field
-              }
-              {...register(column.field as RegisterType)}
-            />
-            {errors[`${column.field as keyof typeof errors}`] && (
-              <p className="errorMessage" id={`${id}-${column.field}`} aria-live="assertive">
-                {String(errors[column.field as keyof typeof errors]?.message)}
-              </p>
-            )}
-          </div>
-        );
-      })}
+      <div className="item">
+        <label className="label-img" htmlFor={`${customId}-img`}>
+          <img src={watch('img')} alt="img" />
+        </label>
+        <input
+          accept="image/*"
+          hidden
+          id={`${customId}-img`}
+          type="file"
+          placeholder="img"
+          {...register('img')}
+        />
+        {errors[`img`] && (
+          <p className="errorMessage" id={`${customId}-profilePhoto`} aria-live="assertive">
+            {String(errors.img.message)}
+          </p>
+        )}
+      </div>
+      <div className="item">
+        <label htmlFor={`${customId}-title`}>Product name</label>
+        <input id={`${customId}-title`} type="text" placeholder="product name" {...register('title')} />
+        {errors[`title`] && (
+          <p className="errorMessage" id={`${customId}-title`} aria-live="assertive">
+            {String(errors.title.message)}
+          </p>
+        )}
+        <label htmlFor={`${customId}-color`}>Color</label>
+        <input id={`${customId}-color`} type="text" placeholder="color" {...register('color')} />
+        {errors[`color`] && (
+          <p className="errorMessage" id={`${customId}-color`} aria-live="assertive">
+            {String(errors.color.message)}
+          </p>
+        )}
+        <label htmlFor={`${customId}-id`}>Price</label>
+        <input id={`${customId}-price`} type="text" placeholder="price" {...register('price')} />
+        {errors[`price`] && (
+          <p className="errorMessage" id={`${customId}-price`} aria-live="assertive">
+            {String(errors.price.message)}
+          </p>
+        )}
+      </div>
+
+      <div className="item checkbox">
+        <label htmlFor={`${customId}-id`}>In Stock</label>
+        <input id={`${customId}-inStock`} type="checkbox" {...register('inStock')} />
+        {errors[`inStock`] && (
+          <p className="errorMessage" id={`${customId}-inStock`} aria-live="assertive">
+            {String(errors.inStock.message)}
+          </p>
+        )}
+      </div>
+      <div className="item">
+        <label htmlFor={`${customId}-id`}>Producer</label>
+        <input id={`${customId}-producer`} type="text" {...register('producer')} />
+        {errors[`producer`] && (
+          <p className="errorMessage" id={`${customId}-producer`} aria-live="assertive">
+            {String(errors.producer.message)}
+          </p>
+        )}
+      </div>
       <button disabled={isSubmitting} type="submit">
         Send
       </button>

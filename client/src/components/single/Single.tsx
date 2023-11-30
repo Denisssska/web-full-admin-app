@@ -1,6 +1,8 @@
+import { Link } from 'react-router-dom';
+
 import { Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
-import { AddUser, Modal } from '..';
+import { AddProduct, AddUser, Modal } from '..';
 
 import './single.scss';
 
@@ -28,6 +30,7 @@ export const Single = (props: AllTypeProps) => {
   const userId = useAppSelector(profileIDSelector);
   const createdData = new Date(props.createdAt).toLocaleDateString();
   const { isOpen, onClose, onOpen } = useModal();
+
   return (
     <div className="single">
       <div className="view">
@@ -36,8 +39,13 @@ export const Single = (props: AllTypeProps) => {
             <img src={props.profilePhoto || props.img} alt="" />
             <h1>{props.title}</h1>
             <h1>{props.username}</h1>
-            {userId === props._id && (
+            {userId === props.user && (
               <img onClick={onOpen} className="createBtn" src="/note.svg" alt="create button" />
+            )}
+            {userId === props._id && (
+              <Link to={'/profile'} replace>
+                <img onClick={onOpen} className="createBtn" src="/note.svg" alt="create button" />
+              </Link>
             )}
           </div>
           <div className="details">
@@ -46,18 +54,39 @@ export const Single = (props: AllTypeProps) => {
               <span className="itemTitle">Created:</span>
               <span className="itemValue">{createdData}</span>
             </div>
-            <div className="item">
-              <span className="itemTitle">first name:</span>
-              <span className="itemValue">{props.firstname}</span>
-            </div>
-            <div className="item">
-              <span className="itemTitle">last name:</span>
-              <span className="itemValue">{props.lastname}</span>
-            </div>
-            <div className="item">
-              <span className="itemTitle">email:</span>
-              <span className="itemValue">{props.email}</span>
-            </div>
+            {props.slug === 'user' ? (
+              <>
+                <div className="item">
+                  <span className="itemTitle">first name:</span>
+                  <span className="itemValue">{props.firstname}</span>
+                </div>
+                <div className="item">
+                  <span className="itemTitle">last name:</span>
+                  <span className="itemValue">{props.lastname}</span>
+                </div>
+                <div className="item">
+                  <span className="itemTitle">email:</span>
+                  <span className="itemValue">{props.email}</span>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="item">
+                  <span className="itemTitle">color:</span>
+                  <span className="itemValue">{props.color}</span>
+                </div>
+                <div className="item">
+                  <span className="itemTitle">producer:</span>
+                  <Link to={`/users/${props.user}`}>
+                    <span className="itemValue link-span">{props.producer}</span>
+                  </Link>
+                </div>
+                <div className="item">
+                  <span className="itemTitle">price:</span>
+                  <span className="itemValue">{props.price}</span>
+                </div>
+              </>
+            )}
           </div>
         </div>
         <hr />
@@ -105,19 +134,18 @@ export const Single = (props: AllTypeProps) => {
       {isOpen() && (
         <Modal onClose={onClose} title={`Update ${props.slug}`}>
           {props.slug === 'product' && (
-            <div>product</div>
-            // <AddProduct
-            //   title={props.title}
-            //   img={props.img}
-            //   createdAt={createdData}
-            //   id={props._id}
-            //   number={props.number}
-            //   color={props.info?.color}
-            //   price={props.info?.price}
-            //   producer={props.info?.producer}
-            //   slug={props.slug}
-            //   onClose={onClose}
-            // />
+            <AddProduct
+              title={props.title}
+              inStock={props.inStock}
+              img={props.img}
+              createdAt={createdData}
+              id={props._id}
+              color={props.color}
+              price={props.price}
+              producer={props.producer}
+              createdBy={props.user}
+              onClose={onClose}
+            />
           )}
 
           {props.slug === 'user' && (

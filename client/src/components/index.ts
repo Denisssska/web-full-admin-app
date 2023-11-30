@@ -8,6 +8,8 @@ import { BigChartBox } from './bigChartBox/BigChartBox.tsx';
 
 import { ChartBox } from './chartBox/ChartBox.tsx';
 
+import { CreateProduct } from './create/CreateProduct.tsx';
+
 import { DataTable } from './dataTable/DataTable.tsx';
 
 import { ErrorBoundary } from './error/ErrorBoundary.tsx';
@@ -32,8 +34,7 @@ export {
   AddUser,
   BarChartBox,
   BigChartBox,
-  ChartBox,
-  DataTable,
+  ChartBox, CreateProduct, DataTable,
   ErrorBoundary,
   Footer,
   Menu,
@@ -42,5 +43,6 @@ export {
   PieChartBox,
   Preloader,
   Single,
-  TopBox,
+  TopBox
 };
+
