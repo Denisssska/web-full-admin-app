@@ -26,7 +26,8 @@ export const createProduct = async (req, res, next) => {
 	}
 }
 export const updateProduct = async (req, res) => {
-	if (req.product.id !== req.params.productId)
+console.log(req.body);
+	if (req.body._id !== req.params.productId)
 		return res.status(401).json('you can update only your account')
 	try {
 		const updatedProduct = await Product.findByIdAndUpdate(
@@ -47,9 +48,7 @@ export const updateProduct = async (req, res) => {
 			{ new: true }
 		)
 		
-		res.status(200).json({
-			message: 'статья обновлена',
-		})
+		res.status(200).json(updatedProduct)
 	} catch (error) {
 		res.status(500).json({
 			message: error.message,
