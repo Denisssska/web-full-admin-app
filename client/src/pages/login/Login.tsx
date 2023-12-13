@@ -14,28 +14,23 @@ import './login.scss';
 
 import { Preloader } from '../../components';
 
-import { getCookie } from '../../components/hooks/getCookie';
-
 import { ToasterProvider } from '../../providers/ToasterProvider';
 
 import { useActionCreators, useAppSelector } from '../../store/hooks/hooks';
 
+import { loadingSelector, profileSelector } from '../../store/selectors';
 
-import { loginTC, userActions } from '../../store/slices';
+import { loginTC } from '../../store/slices';
 
 import { signInSchema, SignInSchemaType } from '../../utils';
-//временное решение
-if (!getCookie('session')) {
-  localStorage.removeItem('persist:root');
-}
 
 export const Login = () => {
-  const user = useAppSelector(state => state.user.currentUser);
-  const actions = useActionCreators({ loginTC, ...userActions });
+  const user = useAppSelector(profileSelector);
+  const actions = useActionCreators({ loginTC });
   useEffect(() => {
-    actions.resetNewUser();
-  }, [actions]);
-  const loading = useAppSelector(state => state.user.loading);
+    localStorage.removeItem('persist:root');
+  });
+  const loading = useAppSelector(loadingSelector);
 
   const id = useId();
 

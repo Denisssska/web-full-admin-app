@@ -98,7 +98,7 @@ export const getProducts = async (req, res) => {
 		const products = await Product.find({})
 			.sort(sort)
 			// .skip(skip)
-			.limit(limit)
+			// .limit(limit)
 		if (!products?.length) {
 			return res.status(404).json({ message: 'Products not found' })
 		}

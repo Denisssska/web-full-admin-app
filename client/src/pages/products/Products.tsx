@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import './products.scss';
 
@@ -73,22 +73,27 @@ export const productColumns: GridColDef[] = [
 export const Products = () => {
   const { isOpen, onClose, onOpen } = useModal();
   const actions = useActionCreators({ getAllProductsTC });
-  let allProducts = useAppSelector(allProductsSelector);
+  const allProducts = useAppSelector(allProductsSelector);
+  const loading = useAppSelector(loadingSelector);
 
   useEffect(() => {
     actions.getAllProductsTC();
-    return () => console.clear();
-  }, [allProducts.length, actions]);
+    return () => console.log('dead useEffect allProducts');
+  }, [actions]);
 
-  const loading = useAppSelector(loadingSelector);
-
-  if (allProducts.length) {
-    allProducts = allProducts.map((element, i) => ({
-      ...element,
-      createdAt: new Date(element.createdAt!).toLocaleDateString(),
-      number: i + 1,
-    }));
-  }
+  const memoizedAllProducts = useMemo(
+    () =>
+      allProducts.map((element, i) => ({
+        ...element,
+        createdAt: new Date(element.createdAt!).toLocaleDateString(),
+        number: i + 1,
+      })),
+    [allProducts]
+  );
+  // if (allProducts.length) {
+  //   allProducts = memoizedAllProducts;
+  // }
+  console.log('rendering all products');
 
   return (
     <div className="products">
@@ -96,7 +101,11 @@ export const Products = () => {
         <h1>Products</h1>
         <button onClick={onOpen}>Add New Products</button>
       </div>
-      {loading ? 'Loading...' : <DataTable slug="products" columns={productColumns} rows={allProducts} />}
+      {loading ? (
+        'Loading...'
+      ) : (
+        <DataTable slug="products" columns={productColumns} rows={memoizedAllProducts} />
+      )}
       {isOpen() && (
         <Modal onClose={onClose} title="Create Product">
           <CreateProduct onClose={onClose} />

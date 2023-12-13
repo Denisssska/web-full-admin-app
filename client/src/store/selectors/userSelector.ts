@@ -1,3 +1,4 @@
+
 import { StateAppType } from '../redux-store';
 
 export const profileSelector =(state:StateAppType)=>state.user.currentUser;
@@ -8,4 +9,5 @@ export const newUserSelector =(state:StateAppType)=>state.user.newUser;
 
 export const allUsersSelector = (state:StateAppType)=>state.user.allUsers;
 export const enjoyedUserSelector = (state: StateAppType) => state.user.enjoyedUser;
+
 

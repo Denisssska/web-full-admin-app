@@ -9,7 +9,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 const initialState = {
   newUser: null,
   currentUser: null as unknown as ProfileSchemaType,
-  allUsers:[] as ProfileSchemaType[],
+  allUsers: [] as ProfileSchemaType[],
   enjoyedUser: {} as ProfileSchemaType,
   loading: false,
   error: false,
@@ -43,7 +43,6 @@ export const logoutTC = createAsyncThunk('/auth/logoutTC', async (_, thunkAPI) =
   try {
     thunkAPI.dispatch(userActions.start());
     await userApi.logout();
-    localStorage.removeItem('persist:root');
     thunkAPI.dispatch(userActions.logout());
   } catch (e: any) {
     console.log(e);
@@ -98,7 +97,7 @@ export const updateUserTC = createAsyncThunk('/auth/updateUserTC', async (body: 
   try {
     thunkAPI.dispatch(userActions.start());
     const data = await userApi.updateUser(body);
-       // const data = await res?.json();
+    // const data = await res?.json();
 
     // if (!res?.ok) {
     //   const errorText = res?.statusText;
@@ -129,7 +128,7 @@ export const getAllUsersTC = createAsyncThunk('/auth/getAllUsersTC', async (_, t
     return thunkAPI.rejectWithValue(e.message);
   }
 });
-export const getUserTC = createAsyncThunk('/auth/getUserTC', async (userId:string, thunkAPI) => {
+export const getUserTC = createAsyncThunk('/auth/getUserTC', async (userId: string, thunkAPI) => {
   thunkAPI.dispatch(userActions.start());
   try {
     const data = await userApi.getUser(userId);
@@ -189,7 +188,7 @@ const userSlice = createSlice({
     logout: state => {
       state.newUser = null;
       state.currentUser = null as unknown as ProfileSchemaType;
-      state.enjoyedUser =  {} as ProfileSchemaType;
+      state.enjoyedUser = {} as ProfileSchemaType;
       state.allUsers = [] as ProfileSchemaType[];
       state.loading = false;
       state.error = false;

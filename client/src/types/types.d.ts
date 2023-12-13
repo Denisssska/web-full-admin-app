@@ -46,4 +46,6 @@ interface ProductCreation {
   user: string;
   _id?:string;
 }
-
+interface ICreateProduct {
+  onClose: () => void;
+}

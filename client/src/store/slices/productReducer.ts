@@ -68,7 +68,7 @@ export const updateProductTC = createAsyncThunk(
     try {
       thunkAPI.dispatch(userActions.start());
       const data = await productApi.updateProduct(body);
-      
+
       thunkAPI.dispatch(productActions.getProductSuccess(data));
       thunkAPI.dispatch(userActions.success());
       return data;
@@ -113,7 +113,7 @@ const productSlice = createSlice({
   reducers: {
     createSuccess: (state, action) => {
       state.error = false;
-      state.allProducts.push(action.payload);
+      state.allProducts.unshift(action.payload);
     },
     getAllProductsSuccess: (state, action) => {
       state.error = false;

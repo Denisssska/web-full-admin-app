@@ -1,6 +1,6 @@
 import './users.scss';
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { DataTable } from '../../components';
 
@@ -76,24 +76,31 @@ export const mobileColumns: GridColDef[] = [
 ];
 export const Users = () => {
   const actions = useActionCreators({ getAllUsersTC });
-  let allUsers = useAppSelector(allUsersSelector);
+  const allUsers = useAppSelector(allUsersSelector);
+  const loading = useAppSelector(loadingSelector);
   useEffect(() => {
-    // if (!allUsers.length) {
     actions.getAllUsersTC();
-    // }
     return () => console.clear();
   }, []);
 
-  const loading = useAppSelector(loadingSelector);
+  const memoizedUsers = useMemo(
+    () =>
+      allUsers.map((element, i) => ({
+        ...element,
+        createdAt: new Date(element.createdAt).toLocaleDateString(),
+        number: i + 1,
+      })),
+    [allUsers]
+  );
 
-  if (allUsers.length) {
-    allUsers = allUsers.map((element, i) => ({
-      ...element,
-      createdAt: new Date(element.createdAt).toLocaleDateString(),
-      number: i + 1,
-    }));
-  }
-  console.log(allUsers);
+  // if (allUsers.length) {
+  //   allUsers = allUsers.map((element, i) => ({
+  //     ...element,
+  //     createdAt: new Date(element.createdAt).toLocaleDateString(),
+  //     number: i + 1,
+  //   }));
+  // }
+  // console.log(allUsers);
 
   const useMobileColumns = window.innerWidth <= 768;
 
@@ -104,7 +111,7 @@ export const Users = () => {
         <h1>Users</h1>
       </div>
 
-      {loading ? 'Loading...' : <DataTable slug="users" columns={columns} rows={allUsers} />}
+      {loading ? 'Loading...' : <DataTable slug="users" columns={columns} rows={memoizedUsers} />}
     </div>
   );
 };

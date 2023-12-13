@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useId } from 'react';
+import { useCallback, useId } from 'react';
 
 import { useForm } from 'react-hook-form';
 
@@ -18,11 +18,7 @@ import '../add/add.scss';
 
 import { typeOfImage } from '../hooks/typeOfImage';
 
-type CreateProps = {
-  onClose: () => void;
-};
-
-export const CreateProduct: React.FC<CreateProps> = ({ onClose }) => {
+export const CreateProduct: React.FC<ICreateProduct> = ({ onClose }) => {
   const actions = useActionCreators({ updateProductImgTC, createProductTC });
   const id = useId();
   const userId = useAppSelector(profileIDSelector);
@@ -39,59 +35,74 @@ export const CreateProduct: React.FC<CreateProps> = ({ onClose }) => {
       img: 'https://img.freepik.com/premium-vector/shirt-design-skull-skateboarder-badge_9645-1351.jpg?w=826',
     },
   });
-  const uploadImageToCloudinary = async (image: File) => {
-    const data: UploadImageData = {
-      file: image,
-      upload_preset: import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET,
-      cloud_name: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
-      folder: 'Cloudinary-admin-products',
-    };
-    const formData = new FormData();
-    for (const key in data) {
-      formData.append(key, data[key]);
-    }
-    return await actions.updateProductImgTC(formData);
-  };
+  const watchTitle = watch('title');
+  const watchImg = watch('img');
 
-  const watchToast = (value: any) => {
-    if (value.error) {
-      toast.error(`Не удалось создать ${watch('title')}!`);
-    } else {
-      toast.success(`${watch('title')} успешно создан!`);
-    }
-  };
-  const onSubmit = async (data: ProductsSchemaType) => {
-    console.log(data);
-    if (data.img instanceof FileList) {
-      const savedPhoto = await uploadImageToCloudinary(data.img[0]);
-      if (savedPhoto.payload === 'Failed to fetch') {
-        toast.error(`Не удалось создать ${watch('title')}!`);
-        return;
+  const uploadImageToCloudinary = useCallback(
+    async (image: File) => {
+      const data: UploadImageData = {
+        file: image,
+        upload_preset: import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET,
+        cloud_name: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
+        folder: 'Cloudinary-admin-products',
+      };
+      const formData = new FormData();
+      for (const key in data) {
+        formData.append(key, data[key]);
       }
-      const createdProduct = { ...data, img: savedPhoto.payload, user: userId };
-      const savedUpdates = await actions.createProductTC(createdProduct);
-      await Promise.all([savedPhoto, savedUpdates]).then(res => {
-        watchToast(res[1]);
-      });
+      return await actions.updateProductImgTC(formData);
+    },
+    [actions]
+  );
+
+  // const watchToast = (value: any) => {
+  //   if (value.error) {
+  //     toast.error(`Не удалось создать ${watchTitle}!`);
+  //   } else {
+  //     toast.success(`${watchTitle} успешно создан!`);
+  //   }
+  // };
+  const watchToast = useCallback((value: any): void => {
+    if (value.error) {
+      toast.error(`Не удалось создать ${watchTitle}!`);
     } else {
-      await actions
-        .createProductTC({
-          ...data,
-          user: userId,
-          img: watch('img'),
-        })
-        .then(res => {
-          watchToast(res);
-        });
+      toast.success(`${watchTitle} успешно создан!`);
     }
-    onClose();
-  };
+  }, [watchTitle]);
+  const onSubmit = useCallback(
+    async (data: ProductsSchemaType) => {
+      if (data.img instanceof FileList) {
+        const savedPhoto = await uploadImageToCloudinary(data.img[0]);
+        if (savedPhoto.payload === 'Failed to fetch') {
+          toast.error(`Не удалось создать ${watchTitle}!`);
+          return;
+        }
+        const createdProduct = { ...data, img: savedPhoto.payload, user: userId };
+        const savedUpdates = await actions.createProductTC(createdProduct);
+        await Promise.all([savedPhoto, savedUpdates]).then(res => {
+          watchToast(res[1]);
+        });
+      } else {
+        await actions
+          .createProductTC({
+            ...data,
+            user: userId,
+            img: watchImg,
+          })
+          .then(res => {
+            watchToast(res);
+          });
+      }
+      onClose();
+    },
+    [actions, onClose, uploadImageToCloudinary, userId, watchImg, watchTitle, watchToast]
+  );
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="item">
         <label className="label-img" htmlFor={`${id}-img`}>
-          <img src={typeOfImage(watch('img'))} alt="img" />
+          <img src={typeOfImage(watchImg)} alt="img" />
         </label>
         <input accept="image/*" hidden id={`${id}-img`} type="file" placeholder="img" {...register('img')} />
         {errors[`img`] && (

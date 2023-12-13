@@ -15,7 +15,6 @@ import { logoutTC } from '../../store/slices';
 export const Navbar = () => {
   const user = useAppSelector(profileSelector);
   const actions = useActionCreators({ logoutTC });
-
   const logoutHandler = async () => await actions.logoutTC();
 
   return (

@@ -1,5 +1,7 @@
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
+import React, { FC, useCallback, useMemo } from 'react';
+
 import { Link } from 'react-router-dom';
 
 import { ProductsSchemaType, ProfileSchemaType } from '../../utils';
@@ -14,45 +16,48 @@ type Props = {
   slug: string;
 };
 
-export const DataTable = (props: Props) => {
-  const handleDelete = (id: number) => {
-    console.log(id);
-  };
+export const DataTable: FC<Props> = React.memo(({ columns, rows, slug }) => {
+console.log('render data');
 
-  const actionColumn: GridColDef = {
-    field: 'action',
-    headerName: 'Action',
-    width: 70,
-    renderCell: params => {
-      // console.log(params);
+  const handleDelete = useCallback((id: number) => {
+    // Логика удаления
+  }, []);
 
-      return (
-        <div className="action">
-          <div>
-            <Link to={`/${props.slug}/${params.row._id}`}>
-              <img src="/view.svg" alt="" />
-            </Link>
+  const actionColumn: GridColDef = useMemo(
+    () => ({
+      field: 'action',
+      headerName: 'Action',
+      width: 70,
+      renderCell: params => {
+        return (
+          <div className="action">
+            <div>
+              <Link to={`/${slug}/${params.row._id}`}>
+                <img src="/view.svg" alt="" />
+              </Link>
+            </div>
+
+            <div className="delete" onClick={() => handleDelete(params.row._id)}>
+              <img src="/delete.svg" alt="" />
+            </div>
           </div>
-
-          <div className="delete" onClick={() => handleDelete(params.row._id)}>
-            <img src="/delete.svg" alt="" />
-          </div>
-        </div>
-      );
-    },
-  };
+        );
+      },
+    }),
+    [handleDelete, slug]
+  );
 
   return (
     <div className="dataTable">
       <DataGrid
         getRowId={row => row._id}
         className="dataGrid"
-        rows={props.rows}
-        columns={[...props.columns, actionColumn]}
+        rows={rows}
+        columns={[...columns, actionColumn]}
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 10,
+              pageSize:5,
             },
           },
         }}
@@ -72,4 +77,5 @@ export const DataTable = (props: Props) => {
       />
     </div>
   );
-};
+});
+DataTable.displayName='DataTable';
