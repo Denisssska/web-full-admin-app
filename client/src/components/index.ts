@@ -16,7 +16,9 @@ import { ErrorBoundary } from './error/ErrorBoundary.tsx';
 
 import { Footer } from './footer/Footer.tsx';
 
-import { Menu } from './menu/Menu.tsx';
+import Menu from './menu/Menu.tsx';
+
+import MenuLoader from './menu/MenuLoader.tsx';
 
 import { Modal } from './modal/Modal.tsx';
 
@@ -40,6 +42,7 @@ export {
   ErrorBoundary,
   Footer,
   Menu,
+  MenuLoader,
   Modal,
   Navbar,
   PieChartBox,

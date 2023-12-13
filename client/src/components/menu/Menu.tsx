@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { menu } from '../../data';
 
 import './menu.scss';
-export const Menu = () => {
+const Menu = () => {
   return (
     <div className="menu">
       {menu.map(item => (
@@ -20,3 +20,4 @@ export const Menu = () => {
     </div>
   );
 };
+export default Menu;
