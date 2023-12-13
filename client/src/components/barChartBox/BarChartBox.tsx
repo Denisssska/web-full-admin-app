@@ -8,7 +8,7 @@ type BarChartBoxType = {
   dataKey: string;
   chartData: object[];
 };
-export const BarChartBox: React.FC<BarChartBoxType> = ({ color, chartData, dataKey, title }) => {
+const BarChartBox: React.FC<BarChartBoxType> = ({ color, chartData, dataKey, title }) => {
   return (
     <div className="barChartBox">
       <h1>{title}</h1>
@@ -27,3 +27,4 @@ export const BarChartBox: React.FC<BarChartBoxType> = ({ color, chartData, dataK
     </div>
   );
 };
+export default BarChartBox;

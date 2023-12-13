@@ -13,7 +13,7 @@ type Props = {
   percentage: number;
   chartData: object[];
 };
-export const ChartBox: React.FC<Props> = props => {
+const ChartBox: React.FC<Props> = props => {
   return (
     <div className="chartBox">
       <div className="boxInfo">
@@ -55,3 +55,4 @@ export const ChartBox: React.FC<Props> = props => {
     </div>
   );
 };
+export default ChartBox;

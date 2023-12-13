@@ -1,7 +1,7 @@
 import { topDealUsers } from '../../data';
 
 import './topBox.scss';
-export const TopBox = () => {
+const TopBox = () => {
   return (
     <div className="topBox">
       <h1>Top Deals</h1>
@@ -22,3 +22,4 @@ export const TopBox = () => {
     </div>
   );
 };
+export default TopBox;

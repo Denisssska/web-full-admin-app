@@ -9,7 +9,7 @@ const data = [
   { name: 'Tablet', value: 200, color: '#FF8042' },
 ];
 
-export const PieChartBox = () => {
+const PieChartBox = () => {
   return (
     <div className="pieChartBox">
       <h1>Leads by Source</h1>
@@ -39,3 +39,4 @@ export const PieChartBox = () => {
     </div>
   );
 };
+export default PieChartBox;

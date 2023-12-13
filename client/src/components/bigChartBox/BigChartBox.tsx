@@ -47,7 +47,7 @@ const data = [
   },
 ];
 
-export const BigChartBox = () => {
+const BigChartBox = () => {
   return (
     <div className="bigChartBox">
       <h1>Revenue Analytics</h1>
@@ -74,3 +74,4 @@ export const BigChartBox = () => {
     </div>
   );
 };
+export default BigChartBox;
