@@ -1,11 +1,11 @@
 import { Suspense, lazy } from 'react';
 
 import { Preloader } from '../../components';
-const AsyncHome = lazy(() => import('./AsyncHome.tsx'));
+const Home = lazy(() => import('./Home.tsx'));
 const HomeLoader = () => {
   return (
     <Suspense fallback={<Preloader />}>
-      <AsyncHome />
+      <Home />
     </Suspense>
   );
 };

@@ -18,7 +18,7 @@ import { signUpTC } from '../../store/slices';
 
 import { signupSchema, SignUpSchemaType } from '../../utils';
 
-export const SignUp = () => {
+const SignUp = () => {
   const actions = useActionCreators({ signUpTC });
   const { newUser, loading } = useAppSelector(state => state.user);
 
@@ -106,3 +106,4 @@ export const SignUp = () => {
     </div>
   );
 };
+export default SignUp;

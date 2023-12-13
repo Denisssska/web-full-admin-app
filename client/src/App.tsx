@@ -8,13 +8,13 @@ import Layout from './Layout';
 
 import {
   HomeLoader,
-  Login,
+  LoginLoader,
   ProductLoader,
   ProductsLoader,
   ProfileLoader,
-  SignUp,
+  SignUpLoader,
   UserLoader,
-  UsersLoader
+  UsersLoader,
 } from './pages';
 
 import PrivateRoute from './privateRoute/PrivateRoute';
@@ -63,7 +63,7 @@ const App = () => {
       path: '/login',
       element: (
         <>
-          <Login />
+          <LoginLoader />
         </>
       ),
     },
@@ -71,7 +71,7 @@ const App = () => {
       path: '/signup',
       element: (
         <>
-          <SignUp />
+          <SignUpLoader />
           <ToasterProvider />
         </>
       ),
