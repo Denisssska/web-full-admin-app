@@ -18,8 +18,6 @@ import { Footer } from './footer/Footer.tsx';
 
 import Menu from './menu/Menu.tsx';
 
-import MenuLoader from './menu/MenuLoader.tsx';
-
 import { Modal } from './modal/Modal.tsx';
 
 import { Navbar } from './navbar/Navbar.tsx';
@@ -32,17 +30,18 @@ import { Single } from './single/Single.tsx';
 
 import TopBox from './topBox/TopBox.tsx';
 
-
 export {
   AddProduct,
   AddUser,
   BarChartBox,
   BigChartBox,
-  ChartBox, CreateProduct, DataTable,
+  ChartBox,
+  CreateProduct,
+  DataTable,
   ErrorBoundary,
   Footer,
   Menu,
-  MenuLoader,
+
   Modal,
   Navbar,
   PieChartBox,
