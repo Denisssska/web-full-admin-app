@@ -14,9 +14,7 @@ import './product.scss';
 
 import { getProductTC } from '../../store/slices';
 
-
-
-export const Product = () => {
+const Product = () => {
   const { id } = useParams();
   const actions = useActionCreators({ getProductTC });
   const currentProduct = useAppSelector(currentProductSelector);
@@ -31,9 +29,10 @@ export const Product = () => {
     return () => console.clear();
   }, [id]);
   const loading = useAppSelector(loadingSelector);
-   const res = {
-     ...singleUserAndProductInfo,
-     ...currentProduct,
-   };
+  const res = {
+    ...singleUserAndProductInfo,
+    ...currentProduct,
+  };
   return <div className="product">{loading ? 'Loading...' : <Single slug="product" {...res} />}</div>;
 };
+export default Product;

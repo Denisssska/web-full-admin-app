@@ -6,9 +6,16 @@ import { ErrorBoundary } from './components';
 
 import Layout from './Layout';
 
-import { Login, Product, Products, Profile, SignUp, User, Users } from './pages';
-
-import HomeLoader from './pages/home/HomeLoader';
+import {
+  HomeLoader,
+  Login,
+  ProductLoader,
+  ProductsLoader,
+  ProfileLoader,
+  SignUp,
+  UserLoader,
+  UsersLoader
+} from './pages';
 
 import PrivateRoute from './privateRoute/PrivateRoute';
 
@@ -28,28 +35,27 @@ const App = () => {
       children: [
         {
           path: '/',
-          // element: <Home />,
           element: <HomeLoader />,
         },
         {
           path: '/profile',
-          element: <Profile />,
+          element: <ProfileLoader />,
         },
         {
           path: '/users',
-          element: <Users />,
+          element: <UsersLoader />,
         },
         {
           path: '/products',
-          element: <Products />,
+          element: <ProductsLoader />,
         },
         {
           path: '/users/:id',
-          element: <User />,
+          element: <UserLoader />,
         },
         {
           path: '/products/:id',
-          element: <Product />,
+          element: <ProductLoader />,
         },
       ],
     },

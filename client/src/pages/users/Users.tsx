@@ -74,7 +74,7 @@ export const mobileColumns: GridColDef[] = [
     width: 30,
   },
 ];
-export const Users = () => {
+const Users = () => {
   const actions = useActionCreators({ getAllUsersTC });
   const allUsers = useAppSelector(allUsersSelector);
   const loading = useAppSelector(loadingSelector);
@@ -106,3 +106,4 @@ export const Users = () => {
     </div>
   );
 };
+export default Users;

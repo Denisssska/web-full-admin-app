@@ -16,7 +16,7 @@ import { enjoyedUserSelector, loadingSelector } from '../../store/selectors';
 
 import { getUserTC } from '../../store/slices';
 
-export const User = () => {
+const User = () => {
   const { id } = useParams();
   const loading = useSelector(loadingSelector);
   const enjoyedUser = useAppSelector(enjoyedUserSelector);
@@ -35,3 +35,4 @@ export const User = () => {
   };
   return <div className="user">{loading ? 'Loading...' : <Single slug="user" {...res} />}</div>;
 };
+export default User;

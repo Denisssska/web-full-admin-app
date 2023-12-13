@@ -70,7 +70,7 @@ export const productColumns: GridColDef[] = [
   },
 ];
 
-export const Products = () => {
+const Products = () => {
   const { isOpen, onClose, onOpen } = useModal();
   const actions = useActionCreators({ getAllProductsTC });
   const allProducts = useAppSelector(allProductsSelector);
@@ -110,3 +110,4 @@ export const Products = () => {
     </div>
   );
 };
+export default Products;

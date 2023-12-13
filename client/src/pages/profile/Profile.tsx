@@ -18,7 +18,7 @@ import { updateUserImgTC, updateUserTC } from '../../store/slices';
 
 import { ProfileSchemaType, profileSchema } from '../../utils';
 
-export const Profile = () => {
+const Profile = () => {
   const id = useId();
   const user = useAppSelector(profileSelector);
   const loading = useAppSelector(loadingSelector);
@@ -198,3 +198,4 @@ export const Profile = () => {
     </div>
   );
 };
+export default Profile;
