@@ -1,8 +1,6 @@
-import { Suspense } from 'react';
-
 import { Outlet } from 'react-router-dom';
 
-import { Footer, MenuLoader, Navbar, Preloader } from './components';
+import { Footer, Menu, Navbar, Preloader } from './components';
 
 import { ToasterProvider } from './providers/ToasterProvider';
 
@@ -12,9 +10,7 @@ const Layout = () => {
       <Navbar />
       <div className="container">
         <div className="menuContainer">
-          <Suspense fallback={<Preloader />}>
-            <MenuLoader />
-          </Suspense>
+          <Menu />
         </div>
         <div className="contentContainer">
           <Outlet />
