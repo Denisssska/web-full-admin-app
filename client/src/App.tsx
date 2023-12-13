@@ -9,10 +9,12 @@ import Layout from './Layout';
 import {
   HomeLoader,
   LoginLoader,
+  Product,
   ProductLoader,
   ProductsLoader,
   ProfileLoader,
   SignUpLoader,
+  User,
   UserLoader,
   UsersLoader,
 } from './pages';
@@ -51,11 +53,11 @@ const App = () => {
         },
         {
           path: '/users/:id',
-          element: <UserLoader />,
+          element: <User />,
         },
         {
           path: '/products/:id',
-          element: <ProductLoader />,
+          element: <Product />,
         },
       ],
     },
