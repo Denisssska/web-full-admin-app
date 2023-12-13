@@ -80,7 +80,7 @@ export const Users = () => {
   const loading = useAppSelector(loadingSelector);
   useEffect(() => {
     actions.getAllUsersTC();
-    return () => console.clear();
+    return () => console.log();
   }, []);
 
   const memoizedUsers = useMemo(
@@ -92,15 +92,6 @@ export const Users = () => {
       })),
     [allUsers]
   );
-
-  // if (allUsers.length) {
-  //   allUsers = allUsers.map((element, i) => ({
-  //     ...element,
-  //     createdAt: new Date(element.createdAt).toLocaleDateString(),
-  //     number: i + 1,
-  //   }));
-  // }
-  // console.log(allUsers);
 
   const useMobileColumns = window.innerWidth <= 768;
 

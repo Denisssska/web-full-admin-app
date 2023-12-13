@@ -78,8 +78,8 @@ export const Products = () => {
 
   useEffect(() => {
     actions.getAllProductsTC();
-    return () => console.log('dead useEffect allProducts');
-  }, [actions]);
+    return () => {console.log();};
+  }, []);
 
   const memoizedAllProducts = useMemo(
     () =>
@@ -90,10 +90,6 @@ export const Products = () => {
       })),
     [allProducts]
   );
-  // if (allProducts.length) {
-  //   allProducts = memoizedAllProducts;
-  // }
-  console.log('rendering all products');
 
   return (
     <div className="products">

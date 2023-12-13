@@ -17,7 +17,6 @@ type Props = {
 };
 
 export const DataTable: FC<Props> = React.memo(({ columns, rows, slug }) => {
-console.log('render data');
 
   const handleDelete = useCallback((id: number) => {
     // Логика удаления
