@@ -1,10 +1,11 @@
 import { Suspense, lazy } from 'react';
 
-import { Preloader } from '../../components/index.ts';
+import { PreloaderForLazy } from '../../components/preloader/PreloaderForLazy.tsx';
+
 const SignUp = lazy(() => import('./SignUp.tsx'));
 const SignUpLoader = () => {
   return (
-    <Suspense fallback={<Preloader />}>
+    <Suspense fallback={<PreloaderForLazy />}>
       <SignUp />
     </Suspense>
   );
