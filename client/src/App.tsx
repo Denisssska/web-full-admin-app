@@ -11,11 +11,13 @@ import {
   LoginLoader,
   Product,
   ProductLoader,
+  Products,
   ProductsLoader,
   ProfileLoader,
   SignUpLoader,
   User,
   UserLoader,
+  Users,
   UsersLoader,
 } from './pages';
 
@@ -45,11 +47,11 @@ const App = () => {
         },
         {
           path: '/users',
-          element: <UsersLoader />,
+          element: <Users />,
         },
         {
           path: '/products',
-          element: <ProductsLoader />,
+          element: <Products />,
         },
         {
           path: '/users/:id',
