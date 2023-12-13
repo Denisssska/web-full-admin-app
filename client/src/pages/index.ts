@@ -1,4 +1,4 @@
-import Home from './home/Home';
+import  Home  from './home/Home';
 
 import HomeLoader from './home/HomeLoader';
 
@@ -16,11 +16,15 @@ import ProductsLoader from './products/ProductsLoader';
 
 import Profile from './profile/Profile';
 
+import ProfileLoader from './profile/ProfileLoader';
+
 import SignUp from './signup/SignUp';
 
 import SignUpLoader from './signup/SignUpLoader';
 
 import User from './user/User';
+
+import UserLoader from './user/UserLoader';
 
 import Users from './users/Users';
 
@@ -35,9 +39,12 @@ export {
   Products,
   ProductsLoader,
   Profile,
+  ProfileLoader,
   SignUp,
   SignUpLoader,
   User,
+  UserLoader,
   Users,
-  UsersLoader,
+  UsersLoader
 };
+

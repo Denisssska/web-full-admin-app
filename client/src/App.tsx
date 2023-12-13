@@ -11,9 +11,9 @@ import {
   LoginLoader,
   ProductLoader,
   ProductsLoader,
-  Profile,
+  ProfileLoader,
   SignUpLoader,
-  User,
+  UserLoader,
   UsersLoader,
 } from './pages';
 
@@ -39,7 +39,7 @@ const App = () => {
         },
         {
           path: '/profile',
-          element: <Profile />,
+          element: <ProfileLoader />,
         },
         {
           path: '/users',
@@ -51,7 +51,7 @@ const App = () => {
         },
         {
           path: '/users/:id',
-          element: <User />,
+          element: <UserLoader />,
         },
         {
           path: '/products/:id',

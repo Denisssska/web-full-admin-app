@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { useParams } from 'react-router-dom';
 
-import { Single } from '../../components';
+import { Single } from '../../components/single/Single';
 
 import { singleUserAndProductInfo } from '../../data';
 
@@ -15,6 +15,7 @@ import { useActionCreators, useAppSelector } from '../../store/hooks/hooks';
 import { enjoyedUserSelector, loadingSelector } from '../../store/selectors';
 
 import { getUserTC } from '../../store/slices';
+
 
 const User = () => {
   const { id } = useParams();

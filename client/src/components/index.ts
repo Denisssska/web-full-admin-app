@@ -26,7 +26,7 @@ import PieChartBox from './pieChartBox/PieChartBox.tsx';
 
 import { Preloader } from './preloader/Preloader.tsx';
 
-import { Single } from './single/Single.tsx';
+
 
 import TopBox from './topBox/TopBox.tsx';
 
@@ -46,7 +46,7 @@ export {
   Navbar,
   PieChartBox,
   Preloader,
-  Single,
+
   TopBox
 };
 

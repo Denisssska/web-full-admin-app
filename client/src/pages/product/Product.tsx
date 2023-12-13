@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { useParams } from 'react-router-dom';
 
-import { Single } from '../../components';
+import { Single } from '../../components/single/Single';
 
 import { singleUserAndProductInfo } from '../../data';
 
@@ -13,6 +13,7 @@ import { currentProductSelector, loadingSelector } from '../../store/selectors';
 import './product.scss';
 
 import { getProductTC } from '../../store/slices';
+
 
 const Product = () => {
   const { id } = useParams();
