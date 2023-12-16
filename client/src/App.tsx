@@ -7,13 +7,17 @@ import { ErrorBoundary } from './components';
 import Layout from './Layout';
 
 import {
+  Home,
   HomeLoader,
+  Login,
   LoginLoader,
   Product,
   ProductLoader,
   Products,
   ProductsLoader,
+  Profile,
   ProfileLoader,
+  SignUp,
   SignUpLoader,
   User,
   UserLoader,
@@ -39,11 +43,11 @@ const App = () => {
       children: [
         {
           path: '/',
-          element: <HomeLoader />,
+          element: <Home />,
         },
         {
           path: '/profile',
-          element: <ProfileLoader />,
+          element: <Profile />,
         },
         {
           path: '/users',
@@ -67,7 +71,7 @@ const App = () => {
       path: '/login',
       element: (
         <>
-          <LoginLoader />
+          <Login />
         </>
       ),
     },
@@ -75,7 +79,7 @@ const App = () => {
       path: '/signup',
       element: (
         <>
-          <SignUpLoader />
+          <SignUp />
           <ToasterProvider />
         </>
       ),
