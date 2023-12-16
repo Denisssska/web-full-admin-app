@@ -58,7 +58,7 @@ const App = () => {
           element: <User />,
         },
         {
-          path: '/products/:id',
+          path: '/products/id',
           element: <Product />,
         },
       ],
