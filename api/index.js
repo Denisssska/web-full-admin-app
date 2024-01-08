@@ -150,7 +150,7 @@ app.use('/products', productRoutes);
 app.use(express.static(path.join(__dirname, '/client/dist')));
 // Route для поддержки HTML5 History API
 app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
+res.sendFile(path.join(__dirname, '/client/dist/index.html'));	// res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
 })
 
 

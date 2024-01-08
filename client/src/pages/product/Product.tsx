@@ -1,19 +1,11 @@
 import { useEffect } from 'react';
-
 import { useParams } from 'react-router-dom';
-
 import { Single } from '../../components/single/Single';
-
 import { singleUserAndProductInfo } from '../../data';
-
 import { useActionCreators, useAppSelector } from '../../store/hooks/hooks';
-
 import { currentProductSelector, loadingSelector } from '../../store/selectors';
-
-import './product.scss';
-
 import { getProductTC } from '../../store/slices';
-
+import './product.scss';
 
 const Product = () => {
   const { id } = useParams();
